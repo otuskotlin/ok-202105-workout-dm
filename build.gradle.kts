@@ -1,19 +1,18 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.5.10"
-    application
+    kotlin("jvm") apply false
+    kotlin("multiplatform") apply false
 }
 
-group = "me.admin"
-version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-}
+group = "ru.otus.kotlin"
+version = "0.0.1"
 
-dependencies {
-    testImplementation(kotlin("test"))
+subprojects{
+    group = rootProject.group
+    version = rootProject.version
+    repositories {
+        mavenCentral()
+    }
 }
 
 tasks.test {
