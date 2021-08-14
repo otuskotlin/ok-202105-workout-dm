@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: SpotrProjcetAPI
+  description: SpotrProjcetAPI
+  version: 0.0.1
+servers:
+  - url: 'http://localhost:8080'
+
+tags:
+  - name: workout
+  descriptions: CRUDS для тренеровок
+  -
+paths:
+  /workout/create:
+    post:
+      tags:
+        - workout
+      requestBody:
+        description: Объект запроса для инициализации при старте приложения
+
+      responses:
+        201:
+          description: workout has ben created
+          content:
+            application/json
+
+components:
+  schemas:
+
+
+

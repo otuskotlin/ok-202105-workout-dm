@@ -11,3 +11,4 @@ pluginManagement{
 
 include("TDD")
 include("m2m2-testing")
+include("SportProject")
