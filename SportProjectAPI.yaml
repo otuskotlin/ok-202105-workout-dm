@@ -4,12 +4,11 @@ info:
   description: SpotrProjcetAPI
   version: 0.0.1
 servers:
-  - url: 'http://localhost:8080'
-
+  - url: http://localhost:8080
 tags:
   - name: workout
-  descriptions: CRUDS для тренеровок
-  -
+    description: описание
+
 paths:
   /workout/create:
     post:
@@ -17,15 +16,132 @@ paths:
         - workout
       requestBody:
         description: Объект запроса для инициализации при старте приложения
-
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workout'
+        required: true
       responses:
-        201:
+        '201':
           description: workout has ben created
           content:
-            application/json
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+  /workout:
+    get:
+      tags:
+        - workout
+      responses:
+        200:
+          description: все тренеровки
+          content:
+            application/json:
+              schema:
+                items:
+                  type: array
+                  $ref: '#/components/schemas/Workout'
+
+
+  /workout/{id}:
+    get:
+      tags:
+        - workout
+      responses:
+        200:
+          description: Показ тренеровки по ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+
+  /workout/id:
+    delete:
+      tags:
+        - workout
+      responses:
+        200:
+          description: Удаление тренеровки по ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+
+
+
+
 
 components:
   schemas:
+    Workout:
+      title: Тренеровка
+      description: Содержит описание тренеровки и упражнения
+      type: object
+      properties:
+        id:
+          type: object
+        name:
+          type: string
+          description: Название упражнения
+        description:
+          type: string
+          description: Описание упражнения
+        items:
+          $ref: '#/components/schemas/Exercise'
+        workoutOuner:
+          type: object
+          $ref: '#/components/schemas/User'
+
+
+    Exercise:
+      title: Упражнение
+      type: object
+      description: упражнение его повторения, вес и подходы
+      properties:
+        nameExercise:
+          type: string
+        retry:
+          type: integer
+          description: количество повторов
+        numberRepetitions:
+          type: integer
+          description: количество повторений
+        isOwnWeight:
+          type: boolean
+          description: упражнение с своим весом?
+        weigth:
+          type: integer
+          description: вес в упражнении
+
+    User:
+      title: Пользователь
+      type: object
+      description: Пользователь
+      properties:
+        id:
+          type: object
+        name:
+          type: string
+          description: Имя пользователя
+        age:
+          type: integer
+          description: Возраст
+        mass:
+          type: integer
+          description: Вес
+        regData:
+          type: object
+          $ref: '#/components/schemas/RegData'
+
+    RegData:
+      title: Данные для регистрации
+      type: object
+      description: Данные при регистрации
+      properties:
+        login:
+          type: string
+        password:
+          type: string
 
 
 
