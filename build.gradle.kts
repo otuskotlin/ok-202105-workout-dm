@@ -4,7 +4,7 @@ plugins {
 }
 
 
-group = "ru.otus.kotlin"
+group = "ru.ru.otus.kotlin"
 version = "0.0.1"
 
 subprojects{
