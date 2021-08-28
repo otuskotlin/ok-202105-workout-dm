@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Test
 import ru.ru.otus.kotlin.openapi.models.Exercise
+import ru.ru.otus.kotlin.openapi.models.RegData
 import kotlin.test.assertTrue
 
 class SimpleTest {
@@ -29,7 +30,9 @@ class SimpleTest {
 
 	@Test
 	fun testSerialization() {
-		val exercise = Exercise("Test", 10, 1, false, 10)
+		val exercise = Exercise("Test", 10, 1, true, 10)
+		val a = RegData("test", "testP")
+		print(objcetMapper.writeValueAsString(a))
 		val exerciseJson = objcetMapper.writeValueAsString(exercise)
 		print(exerciseJson)
 		val eadValue = objcetMapper.readValue(exerciseJson, Exercise::class.java) as Exercise

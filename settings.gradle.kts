@@ -16,4 +16,5 @@ pluginManagement{
 include("TDD")
 include("m2m2-testing")
 include("SportProject")
-include("DM_SportProject-transport-main-mp")
+include("dm-transport-main-openApi")
+include("dm-transport-main-mp")

@@ -117,10 +117,10 @@ components:
         numberRepetitions:
           type: integer
           description: количество повторений
-        isOwnWeight:
+        OwnWeight:
           type: boolean
           description: упражнение с своим весом?
-        weigth:
+        weight:
           type: integer
           description: вес в упражнении
 
