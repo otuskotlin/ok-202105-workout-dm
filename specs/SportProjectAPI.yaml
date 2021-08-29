@@ -19,7 +19,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Workout'
+              $ref: '#/components/schemas/WorkoutTransfer'
         required: true
       responses:
         '201':
@@ -27,7 +27,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workout'
+                $ref: '#/components/schemas/WorkoutTransfer'
 
   /workout:
     get:
@@ -41,7 +41,8 @@ paths:
               schema:
                 items:
                   type: array
-                  $ref: '#/components/schemas/Workout'
+                  items:
+                    $ref: '#/components/schemas/WorkoutTransfer'
 
   /workout/{id}:
     get:
@@ -59,7 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workout'
+                $ref: '#/components/schemas/WorkoutTransfer'
 
     delete:
       parameters:
@@ -76,15 +77,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workout'
-
-
-
-
+                $ref: '#/components/schemas/WorkoutTransfer'
 
 components:
   schemas:
-    Workout:
+    WorkoutTransfer:
       title: Тренеровка
       description: Содержит описание тренеровки и упражнения
       type: object
@@ -98,13 +95,15 @@ components:
           type: string
           description: Описание упражнения
         items:
-          $ref: '#/components/schemas/Exercise'
+          type: array
+          items:
+            $ref: '#/components/schemas/ExerciseTransfer'
         workoutOuner:
           type: object
-          $ref: '#/components/schemas/User'
+          $ref: '#/components/schemas/UserTransfer'
 
 
-    Exercise:
+    ExerciseTransfer:
       title: Упражнение
       type: object
       description: упражнение его повторения, вес и подходы
@@ -124,7 +123,7 @@ components:
           type: integer
           description: вес в упражнении
 
-    User:
+    UserTransfer:
       title: Пользователь
       type: object
       description: Пользователь
@@ -142,9 +141,9 @@ components:
           description: Вес
         regData:
           type: object
-          $ref: '#/components/schemas/RegData'
+          $ref: '#/components/schemas/RegDataTransfer'
 
-    RegData:
+    RegDataTransfer:
       title: Данные для регистрации
       type: object
       description: Данные при регистрации

@@ -23,7 +23,8 @@ kotlin {
 //            kotlin.srcDirs("$generatedSourcesDir/src/commonMain/kotlin")
 			dependencies {
 				implementation(kotlin("stdlib-common"))
-				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+				kotlin.srcDir("$buildDir/generated/src/commonMain/kotlin/ru/ru/otus/kotlin/kmp/transport/models/")
 			}
 		}
 		val commonTest by getting {
