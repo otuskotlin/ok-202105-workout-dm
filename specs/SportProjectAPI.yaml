@@ -19,14 +19,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WorkoutAdRequest'
+              $ref: "#/components/schemas/WorkoutAddRequest"
       responses:
         200:
           description: All responses
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkoutAdResponse'
+                $ref: "#/components/schemas/WorkoutAddResponse"
 
   /workout/create:
     post:
@@ -37,15 +37,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WorkoutTransfer'
+#              $ref: "#/components/schemas/WorkoutTransfer"
         required: true
       responses:
-        '201':
+        "201":
           description: workout has ben created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkoutTransfer'
+#                $ref: "#/components/schemas/WorkoutTransfer"
 
   /workout:
     get:
@@ -60,7 +60,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/WorkoutTransfer'
+#                    $ref: "#/components/schemas/WorkoutTransfer"
 
   /workout/{id}:
     get:
@@ -78,7 +78,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkoutTransfer'
+#                $ref: "#/components/schemas/WorkoutTransfer"
 
     delete:
       parameters:
@@ -95,7 +95,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkoutTransfer'
+#                $ref: "#/components/schemas/WorkoutTransfer"
 
 components:
   schemas:
@@ -114,7 +114,28 @@ components:
         requestId:
           type: string
         debug:
-          $ref: '#/components/schemas/Debug'
+          $ref: "#/components/schemas/Debug"
+
+    BaseResponse:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+            - success
+            - error
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApiError"
+
+    ApiError:
+      type: object
+      properties:
+        message:
+          type: string
+        field:
+          type: string
 
     Debug:
       type: object
@@ -130,38 +151,14 @@ components:
         stub:
           type: string
 
-    CreateAd:
+    CreateWorkout:
       type: object
-      properties:
-        title:
-          type: string
-          description: "Заголовок тренеровки"
-
-
-    WorkoutAdRequest:
-      type: object
-
-
-
-    WorkoutAdResponse:
-      allOf:
-        - $ref: '#/components/schemas/BaseMessage'
-        - $ref: '#/components/schemas/BaseRequest'
-        - type: object
-          properties:
-            createAd:
-              $ref:
-
-
-
-
-    WorkoutTransfer:
       title: Тренеровка
       description: Содержит описание тренеровки и упражнения
-      type: object
       properties:
         id:
-          type: object
+          type: string
+          description: id
         name:
           type: string
           description: Название упражнения
@@ -171,10 +168,59 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ExerciseTransfer'
-        workoutOuner:
-          type: object
-          $ref: '#/components/schemas/UserTransfer'
+            $ref: "#/components/schemas/ExerciseTransfer"
+
+    UpdateWorkout:
+      allOf:
+        - $ref: "#/components/schemas/CreateWorkout"
+        - type: object
+          properties:
+            id:
+              type: string
+
+    ResultWorkout:
+      allOf:
+        - $ref: "#/components/schemas/UpdateWorkout"
+        - type: object
+          properties:
+            permissions:
+              type: array
+              items:
+                $ref: "#/components/schemas/WorkoutPermissions"
+
+    WorkoutPermissions:
+      type: string
+      enum:
+        - read
+        - update
+        - delite
+
+    WorkoutAddRequest:
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseRequest"
+        - type: object
+          properties:
+            createWorkout:
+              $ref: "#/components/schemas/CreateWorkout"
+            debug:
+              type: object
+              properties:
+                stub:
+                  type: string
+                  enum:
+                    - success
+                    - error
+
+
+    WorkoutAddResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            createdWorkout:
+              $ref: "#/components/schemas/ResultWorkout"
 
 
     ExerciseTransfer:
@@ -215,7 +261,7 @@ components:
           description: Вес
         regData:
           type: object
-          $ref: '#/components/schemas/RegDataTransfer'
+          $ref: "#/components/schemas/RegDataTransfer"
 
     RegDataTransfer:
       title: Данные для регистрации
