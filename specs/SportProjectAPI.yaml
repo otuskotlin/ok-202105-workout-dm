@@ -10,6 +10,24 @@ tags:
     description: описание
 
 paths:
+  /workout/CreateRequest:
+    post:
+      tags:
+        - workout
+      requestBody:
+        description: Запрос на создание workout(тренеровки)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutAdRequest'
+      responses:
+        200:
+          description: All responses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkoutAdResponse'
+
   /workout/create:
     post:
       tags:
@@ -81,6 +99,62 @@ paths:
 
 components:
   schemas:
+
+    BaseMessage:
+      type: object
+      properties:
+        messageType:
+          type: string
+      discriminator:
+        propertyName: messageType
+
+    BaseRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+        debug:
+          $ref: '#/components/schemas/Debug'
+
+    Debug:
+      type: object
+      properties:
+        mode:
+          type: string
+          default:
+            - prod
+          enum:
+            - prod
+            - test
+            - stub
+        stub:
+          type: string
+
+    CreateAd:
+      type: object
+      properties:
+        title:
+          type: string
+          description: "Заголовок тренеровки"
+
+
+    WorkoutAdRequest:
+      type: object
+
+
+
+    WorkoutAdResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            createAd:
+              $ref:
+
+
+
+
     WorkoutTransfer:
       title: Тренеровка
       description: Содержит описание тренеровки и упражнения
