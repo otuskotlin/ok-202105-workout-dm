@@ -7,7 +7,7 @@ servers:
   - url: http://localhost:8080
 tags:
   - name: workout
-    description: описание
+    description: Крады для работы с тренеровками.
 
 paths:
   /workout/CreateRequest:
@@ -28,74 +28,28 @@ paths:
               schema:
                 $ref: "#/components/schemas/WorkoutAddResponse"
 
-  /workout/create:
+  /workout/read:
     post:
       tags:
-        - workout
+        - ad
+      summary: Получить информацию о тренеровке
+      operationId: readWorkout
       requestBody:
-        description: Объект запроса для инициализации при старте приложения
+        description: Объект запроса для получения информации об тренеровке
         content:
           application/json:
             schema:
-#              $ref: "#/components/schemas/WorkoutTransfer"
+              $ref: '#/components/schemas/WorkoutReadRequest'
         required: true
       responses:
-        "201":
-          description: workout has ben created
-          content:
-            application/json:
-              schema:
-#                $ref: "#/components/schemas/WorkoutTransfer"
-
-  /workout:
-    get:
-      tags:
-        - workout
-      responses:
         200:
-          description: все тренеровки
+          description: all responses
           content:
             application/json:
               schema:
-                items:
-                  type: array
-                  items:
-#                    $ref: "#/components/schemas/WorkoutTransfer"
+                $ref: '#/components/schemas/WorkoutReadResponse'
 
-  /workout/{id}:
-    get:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: object
-      tags:
-        - workout
-      responses:
-        200:
-          description: Показ тренеровки по ID
-          content:
-            application/json:
-              schema:
-#                $ref: "#/components/schemas/WorkoutTransfer"
 
-    delete:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: object
-      tags:
-        - workout
-      responses:
-        200:
-          description: Удаление тренеровки по ID
-          content:
-            application/json:
-              schema:
-#                $ref: "#/components/schemas/WorkoutTransfer"
 
 components:
   schemas:
@@ -129,27 +83,6 @@ components:
           items:
             $ref: "#/components/schemas/ApiError"
 
-    ApiError:
-      type: object
-      properties:
-        message:
-          type: string
-        field:
-          type: string
-
-    Debug:
-      type: object
-      properties:
-        mode:
-          type: string
-          default:
-            - prod
-          enum:
-            - prod
-            - test
-            - stub
-        stub:
-          type: string
 
     CreateWorkout:
       type: object
@@ -178,7 +111,7 @@ components:
             id:
               type: string
 
-    ResultWorkout:
+    ResponseWorkout:
       allOf:
         - $ref: "#/components/schemas/UpdateWorkout"
         - type: object
@@ -195,6 +128,7 @@ components:
         - update
         - delite
 
+    #---------------------------------ADD-------------------------------------
     WorkoutAddRequest:
       allOf:
         - $ref: "#/components/schemas/BaseMessage"
@@ -212,7 +146,6 @@ components:
                     - success
                     - error
 
-
     WorkoutAddResponse:
       allOf:
         - $ref: "#/components/schemas/BaseMessage"
@@ -220,7 +153,169 @@ components:
         - type: object
           properties:
             createdWorkout:
-              $ref: "#/components/schemas/ResultWorkout"
+              $ref: "#/components/schemas/ResponseWorkout"
+
+    #---------------------------------READ-------------------------------------
+    WorkoutReadRequest:
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseRequest"
+        - type: object
+          properties:
+            workoutId:
+              type: string
+              description: "Id workout"
+            debug:
+              allOf:
+                - $ref: "#/components/schemas/Debug"
+                - type: object
+                  properties:
+                    stub:
+                      type: string
+                      enum:
+                        - success
+                        - emptyId
+                        - databaseError
+
+    WorkoutReadResponse:
+      description: Структура для ответа на запрос с информацией об объявлении
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            readWorkout:
+              $ref: "#/components/schemas/ResponseWorkout"
+
+    #---------------------------------UPDATE-------------------------------------
+
+    UpdateWorkoutRequest:
+      description: Структура для запроса обновления существующей тренеровки
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            createAd:
+              $ref: '#/components/schemas/UpdateWorkout'
+            debug:
+              allOf:
+                - $ref: '#/components/schemas/Debug'
+                - type: object
+                  properties:
+                    stub:
+                      type: string
+                      enum:
+                        - success
+                        - emptyTitle
+                        - databaseError
+
+    UpdateWorkoutResponse:
+      description: Структура для ответа на запрос с информацией об тренеровке
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            updatedAd:
+              $ref: '#/components/schemas/ResponseWorkout'
+
+    #---------------------------------DELETE-------------------------------------
+
+    DeleteAdRequest:
+      description: Структура для запроса удаления тренеровки
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            deleteAdId:
+              type: string
+            debug:
+              allOf:
+                - $ref: '#/components/schemas/Debug'
+                - type: object
+                  properties:
+                    stub:
+                      type: string
+                      enum:
+                        - success
+                        - emptyId
+                        - databaseError
+
+    DeleteAdResponse:
+      description: Структура для ответа на запрос об удалении тренеровки
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            deletedAd:
+              $ref: '#/components/schemas/ResponseWorkout'
+
+    #---------------------------------SERCH-------------------------------------
+
+    SearchAdRequest:
+      description: Структура для запроса поиска объявлений
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            page:
+              $ref: '#/components/schemas/BasePaginatedRequest'
+
+    SearchAdResponse:
+      description: Структура для ответа на запрос поиска объявлений
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            page:
+              $ref: '#/components/schemas/BasePaginatedResponse'
+            foundAds:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResponseWorkout'
+
+    OffersAdRequest:
+      description: Структура для запроса поиска предложений для объявления
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            page:
+              $ref: '#/components/schemas/BasePaginatedRequest'
+            deleteAdId:
+              type: string
+            debug:
+              allOf:
+                - $ref: '#/components/schemas/Debug'
+                - type: object
+                  properties:
+                    stub:
+                      type: string
+                      enum:
+                        - success
+                        - emptyId
+                        - databaseError
+
+    OffersAdResponse:
+      description: Структура для ответа на запрос поиска предложений для объявления
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            page:
+              $ref: '#/components/schemas/BasePaginatedResponse'
+            offeredAds:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResponseWorkout'
+
 
 
     ExerciseTransfer:
@@ -243,35 +338,54 @@ components:
           type: integer
           description: вес в упражнении
 
-    UserTransfer:
-      title: Пользователь
+    ApiError:
       type: object
-      description: Пользователь
       properties:
-        id:
-          type: object
-        name:
+        message:
           type: string
-          description: Имя пользователя
-        age:
-          type: integer
-          description: Возраст
-        mass:
-          type: integer
-          description: Вес
-        regData:
-          type: object
-          $ref: "#/components/schemas/RegDataTransfer"
+        field:
+          type: string
 
-    RegDataTransfer:
-      title: Данные для регистрации
+    Debug:
       type: object
-      description: Данные при регистрации
       properties:
-        login:
+        mode:
           type: string
-        password:
+          default:
+            - prod
+          enum:
+            - prod
+            - test
+            - stub
+        stub:
           type: string
 
+    BasePaginatedRequest:
+      type: object
+      description: Структура с описанием запрашиваемой страницы в запросах списков
+      properties:
+        size:
+          type: integer
+          description: Размер запрашиваемой страницы
+          format: int32
+        lastId:
+          type: string
+          description: Идентификатор последнего объекта предыдущей страницы
 
-
+    BasePaginatedResponse:
+      type: object
+      description: Структура с описанием страницы в ответе
+      properties:
+        size:
+          type: integer
+          description: Размер запрашиваемой страницы
+          format: int32
+        lastId:
+          type: string
+          description: Идентификатор последнего объекта предыдущей страницы
+        position:
+          type: string
+          enum:
+            - first
+            - middle
+            - last
