@@ -351,14 +351,10 @@ components:
       properties:
         mode:
           type: string
-          default:
-            - prod
           enum:
             - prod
             - test
             - stub
-        stub:
-          type: string
 
     BasePaginatedRequest:
       type: object

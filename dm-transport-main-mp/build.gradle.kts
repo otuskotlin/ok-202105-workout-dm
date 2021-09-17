@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
 	kotlin("multiplatform")
     id("org.openapi.generator")
-	kotlin("plugin.serialization")
+	kotlin("plugin.serialization") version "1.5.20"
 }
 
 val generatedSourcesDir = "$buildDir/generated"
@@ -101,3 +103,18 @@ tasks {
         it.dependsOn(openApiGenerate)
     }
 }
+//dependencies {
+//    implementation(kotlin("stdlib-jdk8"))
+//}
+
+//repositories {
+//    mavenCentral()
+//}
+//val compileKotlin: KotlinCompile by tasks
+//compileKotlin.kotlinOptions {
+//    jvmTarget = "1.8"
+//}
+//val compileTestKotlin: KotlinCompile by tasks
+//compileTestKotlin.kotlinOptions {
+//    jvmTarget = "1.8"
+//}
