@@ -2,8 +2,6 @@ package MyModels
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.ru.otus.kotlin.kmp.transport.models.CreateWorkout
-import ru.ru.otus.kotlin.kmp.transport.models.Debug
 
 @Serializable
 data class CreateWorkoutRequest (
