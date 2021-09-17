@@ -1,11 +1,12 @@
-package MyModels;
+package MyModels.cruds;
 
+import MyModels.ApiError
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 sealed interface BaseResponse {
     @SerialName(value = "result")
-    val result: BaseResponse.Result?
+    val result: Result?
     @SerialName(value = "errors")
     val errors: kotlin.collections.List<ApiError>?
 

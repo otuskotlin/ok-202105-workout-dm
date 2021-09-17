@@ -1,4 +1,4 @@
-package MyModels
+package MyModels.cruds
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

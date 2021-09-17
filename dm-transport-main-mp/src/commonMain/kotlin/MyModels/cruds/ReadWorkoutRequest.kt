@@ -9,9 +9,10 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package MyModels
+package MyModels.cruds
 
 
+import MyModels.Debug
 import kotlinx.serialization.*
 
 /**

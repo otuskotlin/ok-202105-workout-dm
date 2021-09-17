@@ -9,11 +9,11 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package MyModels
+package MyModels.cruds
 
+import MyModels.ApiError
+import MyModels.ResponseWorkout
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 /**
  * Структура для ответа на запрос с информацией об объявлении

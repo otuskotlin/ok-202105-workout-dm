@@ -1,5 +1,6 @@
-package MyModels
+package MyModels.cruds
 
+import MyModels.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

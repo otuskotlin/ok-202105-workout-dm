@@ -1,5 +1,6 @@
-package MyModels
+package MyModels.cruds
 
+import MyModels.ApiError
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.ru.otus.kotlin.kmp.transport.models.ResponseWorkout
@@ -11,6 +12,6 @@ class CreateWorkoutResponse(
     override val result: BaseResponse.Result? = BaseResponse.Result.SUCCESS,
     override val errors: List<ApiError>?,
 
-    ) : BaseMessage ,BaseResponse {
+    ) : BaseMessage, BaseResponse {
 
 }
