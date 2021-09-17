@@ -2,7 +2,6 @@ package MyModels
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.ru.otus.kotlin.kmp.transport.models.ApiError
 import ru.ru.otus.kotlin.kmp.transport.models.ResponseWorkout
 
 @Serializable
