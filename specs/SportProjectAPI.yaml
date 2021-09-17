@@ -10,7 +10,7 @@ tags:
     description: Крады для работы с тренеровками.
 
 paths:
-  /workout/CreateRequest:
+  /workout/create:
     post:
       tags:
         - workout
@@ -19,14 +19,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/WorkoutAddRequest"
+              $ref: "#/components/schemas/CreateWorkoutRequest"
       responses:
         200:
           description: All responses
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WorkoutAddResponse"
+                $ref: "#/components/schemas/CreateWorkoutResponse"
 
   /workout/read:
     post:
@@ -39,7 +39,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WorkoutReadRequest'
+              $ref: '#/components/schemas/ReadWorkoutRequest'
         required: true
       responses:
         200:
@@ -47,9 +47,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkoutReadResponse'
-
-
+                $ref: '#/components/schemas/ReadWorkoutResponse'
 
 components:
   schemas:
@@ -129,7 +127,7 @@ components:
         - delite
 
     #---------------------------------ADD-------------------------------------
-    WorkoutAddRequest:
+    CreateWorkoutRequest:
       allOf:
         - $ref: "#/components/schemas/BaseMessage"
         - $ref: "#/components/schemas/BaseRequest"
@@ -140,13 +138,13 @@ components:
             debug:
               type: object
               properties:
-                stub:
+                status:
                   type: string
                   enum:
                     - success
                     - error
 
-    WorkoutAddResponse:
+    CreateWorkoutResponse:
       allOf:
         - $ref: "#/components/schemas/BaseMessage"
         - $ref: "#/components/schemas/BaseResponse"
@@ -156,7 +154,7 @@ components:
               $ref: "#/components/schemas/ResponseWorkout"
 
     #---------------------------------READ-------------------------------------
-    WorkoutReadRequest:
+    ReadWorkoutRequest:
       allOf:
         - $ref: "#/components/schemas/BaseMessage"
         - $ref: "#/components/schemas/BaseRequest"
@@ -177,7 +175,7 @@ components:
                         - emptyId
                         - databaseError
 
-    WorkoutReadResponse:
+    ReadWorkoutResponse:
       description: Структура для ответа на запрос с информацией об объявлении
       allOf:
         - $ref: "#/components/schemas/BaseMessage"
@@ -222,7 +220,7 @@ components:
 
     #---------------------------------DELETE-------------------------------------
 
-    DeleteAdRequest:
+    DeleteWorkoutRequest:
       description: Структура для запроса удаления тренеровки
       allOf:
         - $ref: '#/components/schemas/BaseMessage'
@@ -243,7 +241,7 @@ components:
                         - emptyId
                         - databaseError
 
-    DeleteAdResponse:
+    DeleteWorkoutResponse:
       description: Структура для ответа на запрос об удалении тренеровки
       allOf:
         - $ref: '#/components/schemas/BaseMessage'
@@ -255,7 +253,7 @@ components:
 
     #---------------------------------SERCH-------------------------------------
 
-    SearchAdRequest:
+    SearchWorkoutRequest:
       description: Структура для запроса поиска объявлений
       allOf:
         - $ref: '#/components/schemas/BaseMessage'
@@ -265,7 +263,7 @@ components:
             page:
               $ref: '#/components/schemas/BasePaginatedRequest'
 
-    SearchAdResponse:
+    SearchWorkoutResponse:
       description: Структура для ответа на запрос поиска объявлений
       allOf:
         - $ref: '#/components/schemas/BaseMessage'
@@ -278,45 +276,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ResponseWorkout'
-
-    OffersAdRequest:
-      description: Структура для запроса поиска предложений для объявления
-      allOf:
-        - $ref: '#/components/schemas/BaseMessage'
-        - $ref: '#/components/schemas/BaseRequest'
-        - type: object
-          properties:
-            page:
-              $ref: '#/components/schemas/BasePaginatedRequest'
-            deleteAdId:
-              type: string
-            debug:
-              allOf:
-                - $ref: '#/components/schemas/Debug'
-                - type: object
-                  properties:
-                    stub:
-                      type: string
-                      enum:
-                        - success
-                        - emptyId
-                        - databaseError
-
-    OffersAdResponse:
-      description: Структура для ответа на запрос поиска предложений для объявления
-      allOf:
-        - $ref: '#/components/schemas/BaseMessage'
-        - $ref: '#/components/schemas/BaseResponse'
-        - type: object
-          properties:
-            page:
-              $ref: '#/components/schemas/BasePaginatedResponse'
-            offeredAds:
-              type: array
-              items:
-                $ref: '#/components/schemas/ResponseWorkout'
-
-
 
     ExerciseTransfer:
       title: Упражнение
