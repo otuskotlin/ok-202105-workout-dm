@@ -1,8 +1,6 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
 	kotlin("multiplatform")
-    id("org.openapi.generator")
+	id("org.openapi.generator")
 	kotlin("plugin.serialization") version "1.5.20"
 }
 
@@ -22,7 +20,6 @@ kotlin {
 		val serializationVersion: String by project
 
 		val commonMain by getting {
-//            kotlin.srcDirs("$generatedSourcesDir/src/commonMain/kotlin")
 			dependencies {
 				implementation(kotlin("stdlib-common"))
 				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
@@ -64,44 +61,44 @@ kotlin {
  * Пока KMP генерируется не так как надо - дискриминатор не учитывается
  */
 openApiGenerate {
-        val openapiGroup = "${rootProject.group}.kmp.transport"
-        generatorName.set("kotlin") // Это и есть активный генератор
-        library.set("multiplatform") // Используем библиотеку для KMP
-        outputDir.set(generatedSourcesDir)
-        packageName.set(openapiGroup)
-        apiPackage.set("$openapiGroup.api")
-        modelPackage.set("$openapiGroup.models")
-        invokerPackage.set("$openapiGroup.invoker")
+	val openapiGroup = "${rootProject.group}.kmp.transport"
+	generatorName.set("kotlin") // Это и есть активный генератор
+	library.set("multiplatform") // Используем библиотеку для KMP
+	outputDir.set(generatedSourcesDir)
+	packageName.set(openapiGroup)
+	apiPackage.set("$openapiGroup.api")
+	modelPackage.set("$openapiGroup.models")
+	invokerPackage.set("$openapiGroup.invoker")
 	inputSpec.set("$rootDir/specs/SportProjectAPI.yaml")
 
-        /**
-         * Здесь указываем, что нам нужны только модели, все остальное не нужно
-         */
-        globalProperties.apply {
-            put("models", "")
-            put("modelDocs", "false")
-        }
+	/**
+	 * Здесь указываем, что нам нужны только модели, все остальное не нужно
+	 */
+	globalProperties.apply {
+		put("models", "")
+		put("modelDocs", "false")
+	}
 
-        /**
-         * Настройка дополнительных параметров из документации по генератору
-         * https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin.md
-         */
-        configOptions.set(
-            mapOf(
-                "dateLibrary" to "string",
-                "enumPropertyNaming" to "UPPERCASE",
-                "collectionType" to "list"
-            )
-        )
+	/**
+	 * Настройка дополнительных параметров из документации по генератору
+	 * https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin.md
+	 */
+	configOptions.set(
+		mapOf(
+			"dateLibrary" to "string",
+			"enumPropertyNaming" to "UPPERCASE",
+			"collectionType" to "list"
+		)
+	)
 
-    }
+}
 /**
  * Устанавливаем зависимость компиляции от генерации исходников. Компиляция начнется только после генерации
  */
 tasks {
-    withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).forEach {
-        it.dependsOn(openApiGenerate)
-    }
+	withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).forEach {
+		it.dependsOn(openApiGenerate)
+	}
 }
 //dependencies {
 //    implementation(kotlin("stdlib-jdk8"))

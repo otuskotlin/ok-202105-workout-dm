@@ -9,26 +9,26 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package MyModels.cruds
+package ModelForRequest.cruds
 
-import MyModels.ApiError
-import MyModels.ResponseWorkout
+
+import ModelForRequest.ApiError
+import ModelForRequest.ResponseWorkout
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 /**
- * Структура для ответа на запрос об удалении тренеровки
+ * Структура для ответа на запрос с информацией об тренеровке
  * @param messageType 
  * @param result 
  * @param errors 
- * @param deletedAd 
+ * @param updatedAd 
  */
 @Serializable
-data class DeleteWorkoutResponse (
+data class UpdateWorkoutResponse (
     @SerialName(value = "messageType") override val messageType: kotlin.String? = null,
-    @SerialName(value = "result") override val result: MyModels.cruds.BaseResponse.Result? = null,
+    @SerialName(value = "result") override val result: BaseResponse.Result? = null,
     @SerialName(value = "errors") override val errors: kotlin.collections.List<ApiError>? = null,
-    @SerialName(value = "deletedAd") val deletedAd: ResponseWorkout? = null
-) : BaseMessage, MyModels.cruds.BaseResponse
+    @SerialName(value = "updatedAd") val updatedAd: ResponseWorkout? = null
+) : BaseMessage, BaseResponse{
 
+}

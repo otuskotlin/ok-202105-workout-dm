@@ -1,6 +1,6 @@
-package MyModels.cruds
+package ModelForRequest.cruds
 
-import MyModels.*
+import ModelForRequest.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

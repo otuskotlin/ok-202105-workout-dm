@@ -1,6 +1,6 @@
-package MyModels.cruds
+package ModelForRequest.cruds
 
-import MyModels.ApiError
+import ModelForRequest.ApiError
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.ru.otus.kotlin.kmp.transport.models.ResponseWorkout

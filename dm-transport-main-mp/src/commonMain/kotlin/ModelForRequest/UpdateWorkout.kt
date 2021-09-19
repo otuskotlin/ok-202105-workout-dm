@@ -1,8 +1,6 @@
-package MyModels
+package ModelForRequest
 
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 /**
  * 
@@ -13,10 +11,11 @@ import kotlinx.serialization.encoding.*
  */
 @Serializable
 data class UpdateWorkout (
-    @SerialName(value = "id") val id: kotlin.String? = null,
+    @SerialName(value = "id") override val id: kotlin.String? = null,
     /* Название упражнения */
     @SerialName(value = "name") val name: kotlin.String? = null,
     /* Описание упражнения */
     @SerialName(value = "description") val description: kotlin.String? = null,
-    @SerialName(value = "items") val items: kotlin.collections.List<ExerciseTransfer>? = null
-)
+    @SerialName(value = "items") val items: kotlin.collections.List<ExerciseTransfer>? = null,
+    override val ownerId: String?
+) : BaseWorkout

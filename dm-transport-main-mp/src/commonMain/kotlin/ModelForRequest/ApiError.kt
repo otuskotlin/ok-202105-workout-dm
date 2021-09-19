@@ -1,4 +1,4 @@
-package MyModels
+package ModelForRequest
 
 
 import kotlinx.serialization.*

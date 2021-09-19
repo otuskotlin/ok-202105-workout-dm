@@ -1,6 +1,6 @@
-package MyModels.cruds
+package ModelForRequest.cruds
 
-import MyModels.Debug
+import ModelForRequest.Debug
 import kotlinx.serialization.SerialName
 
 sealed interface BaseRequest{

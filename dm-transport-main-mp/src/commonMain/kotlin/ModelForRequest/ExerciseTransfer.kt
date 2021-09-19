@@ -1,9 +1,7 @@
-package MyModels
+package ModelForRequest
 
 
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 /**
  * упражнение его повторения, вес и подходы
@@ -25,4 +23,3 @@ data class ExerciseTransfer (
     /* вес в упражнении */
     @SerialName(value = "weight") val weight: kotlin.Int? = null
 )
-

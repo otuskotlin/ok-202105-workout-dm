@@ -1,7 +1,6 @@
-package MyModels.cruds
+package ModelForRequest.cruds
 
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 interface BaseMessage{
     @SerialName(value = "messageType")

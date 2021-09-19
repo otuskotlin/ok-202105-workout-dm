@@ -1,10 +1,8 @@
-package MyModels.cruds
+package ModelForRequest.cruds
 
-import MyModels.Debug
-import MyModels.UpdateWorkout
+import ModelForRequest.Debug
+import ModelForRequest.UpdateWorkout
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 /**
  * Структура для запроса обновления существующей тренеровки

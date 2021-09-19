@@ -9,12 +9,10 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package MyModels
+package ModelForRequest
 
 
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 /**
  * 

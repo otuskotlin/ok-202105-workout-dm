@@ -9,25 +9,25 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package MyModels.cruds
+package ModelForRequest.cruds
 
-import MyModels.Debug
+
+import ModelForRequest.BasePaginatedRequest
+import ModelForRequest.Debug
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 /**
- * Структура для запроса удаления тренеровки
+ * Структура для запроса поиска объявлений
  * @param messageType 
  * @param requestId 
  * @param debug 
- * @param deleteAdId 
+ * @param page 
  */
 @Serializable
-data class DeleteWorkoutRequest (
+data class SearchWorkoutRequest (
     @SerialName(value = "messageType") override val messageType: kotlin.String? = null,
     @SerialName(value = "requestId") override val requestId: kotlin.String? = null,
     @SerialName(value = "debug") override val debug: Debug? = null,
-    @SerialName(value = "deleteAdId") val deleteAdId: kotlin.String? = null
+    @SerialName(value = "page") val page: BasePaginatedRequest? = null
 ) : BaseMessage, BaseRequest
 

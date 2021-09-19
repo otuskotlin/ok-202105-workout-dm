@@ -9,25 +9,23 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package MyModels.cruds
+package ModelForRequest.cruds
 
-
-import MyModels.Debug
+import ModelForRequest.Debug
 import kotlinx.serialization.*
 
 /**
- * 
+ * Структура для запроса удаления тренеровки
  * @param messageType 
  * @param requestId 
  * @param debug 
- * @param workoutId Id workout
+ * @param deleteAdId 
  */
 @Serializable
-data class ReadWorkoutRequest (
+data class DeleteWorkoutRequest (
     @SerialName(value = "messageType") override val messageType: kotlin.String? = null,
     @SerialName(value = "requestId") override val requestId: kotlin.String? = null,
     @SerialName(value = "debug") override val debug: Debug? = null,
-    /* Id workout */
-    @SerialName(value = "workoutId") val workoutId: kotlin.String? = null,
+    @SerialName(value = "deleteAdId") val deleteAdId: kotlin.String? = null
 ) : BaseMessage, BaseRequest
 

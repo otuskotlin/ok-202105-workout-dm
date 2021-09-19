@@ -9,10 +9,10 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package MyModels.cruds
+package ModelForRequest.cruds
 
-import MyModels.ApiError
-import MyModels.ResponseWorkout
+import ModelForRequest.ApiError
+import ModelForRequest.ResponseWorkout
 import kotlinx.serialization.*
 
 /**
