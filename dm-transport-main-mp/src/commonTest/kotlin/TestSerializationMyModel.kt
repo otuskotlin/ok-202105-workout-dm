@@ -1,5 +1,5 @@
-import MyModels.cruds.BaseMessage
-import MyModels.cruds.CreateWorkoutRequest
+import ModelForRequest.cruds.BaseMessage
+import ModelForRequest.cruds.CreateWorkoutRequest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
