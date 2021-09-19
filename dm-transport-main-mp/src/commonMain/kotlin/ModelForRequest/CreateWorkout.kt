@@ -12,5 +12,5 @@ data class CreateWorkout (
     @SerialName(value = "name") val name: kotlin.String? = null,
     /* Описание упражнения */
     @SerialName(value = "description") val description: kotlin.String? = null,
-    @SerialName(value = "items") val items: kotlin.collections.List<ExerciseTransfer>? = null
+    @SerialName(value = "items") val items: List<ExerciseTransfer>? = null
 ) : BaseWorkout
