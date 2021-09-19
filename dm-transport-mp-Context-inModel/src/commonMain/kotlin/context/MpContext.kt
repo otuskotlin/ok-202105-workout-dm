@@ -13,11 +13,11 @@ data class MpContext(
 
     var onRequest: String = "",
     var requestWorkoutId: WorkoutIdModel = WorkoutIdModel.NONE,
-    var requestAd: WorkoutModel = WorkoutModel(),
-    var responseAd: WorkoutModel = WorkoutModel(),
+    var requestWorkout: WorkoutModel = WorkoutModel(),
+    var responseWorkout: WorkoutModel = WorkoutModel(),
     var requestPage: PaginatedModel = PaginatedModel(),
     var responsePage: PaginatedModel = PaginatedModel(),
-    var responseAds: MutableList<WorkoutModel> = mutableListOf(),
+    var responseWorkouts: MutableList<WorkoutModel> = mutableListOf(),
     val errors: MutableList<IError> = mutableListOf(),
     var status: CorStatus = CorStatus.NONE,
 ) {
