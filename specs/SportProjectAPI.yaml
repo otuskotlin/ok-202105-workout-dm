@@ -7,7 +7,7 @@ servers:
   - url: http://localhost:8080
 tags:
   - name: workout
-    description: описание
+    description: Крады для работы с тренеровками.
 
 paths:
   /workout/create:
@@ -15,82 +15,81 @@ paths:
       tags:
         - workout
       requestBody:
-        description: Объект запроса для инициализации при старте приложения
+        description: Запрос на создание workout(тренеровки)
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Workout'
+              $ref: "#/components/schemas/CreateWorkoutRequest"
+      responses:
+        200:
+          description: All responses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateWorkoutResponse"
+
+  /workout/read:
+    post:
+      tags:
+        - ad
+      summary: Получить информацию о тренеровке
+      operationId: readWorkout
+      requestBody:
+        description: Объект запроса для получения информации об тренеровке
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReadWorkoutRequest'
         required: true
       responses:
-        '201':
-          description: workout has ben created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Workout'
-
-  /workout:
-    get:
-      tags:
-        - workout
-      responses:
         200:
-          description: все тренеровки
+          description: all responses
           content:
             application/json:
               schema:
-                items:
-                  type: array
-                  $ref: '#/components/schemas/Workout'
-
-  /workout/{id}:
-    get:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: object
-      tags:
-        - workout
-      responses:
-        200:
-          description: Показ тренеровки по ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Workout'
-
-    delete:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: object
-      tags:
-        - workout
-      responses:
-        200:
-          description: Удаление тренеровки по ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Workout'
-
-
-
-
+                $ref: '#/components/schemas/ReadWorkoutResponse'
 
 components:
   schemas:
-    Workout:
-      title: Тренеровка
-      description: Содержит описание тренеровки и упражнения
+
+    BaseMessage:
       type: object
       properties:
+        messageType:
+          type: string
+      discriminator:
+        propertyName: messageType
+
+    BaseRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+        debug:
+          $ref: "#/components/schemas/Debug"
+
+    BaseResponse:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+            - success
+            - error
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApiError"
+
+
+    CreateWorkout:
+      type: object
+      title: Тренеровка
+      description: Содержит описание тренеровки и упражнения
+      properties:
         id:
-          type: object
+          type: string
+          description: id
         name:
           type: string
           description: Название упражнения
@@ -98,13 +97,187 @@ components:
           type: string
           description: Описание упражнения
         items:
-          $ref: '#/components/schemas/Exercise'
-        workoutOuner:
-          type: object
-          $ref: '#/components/schemas/User'
+          type: array
+          items:
+            $ref: "#/components/schemas/ExerciseTransfer"
 
+    UpdateWorkout:
+      allOf:
+        - $ref: "#/components/schemas/CreateWorkout"
+        - type: object
+          properties:
+            id:
+              type: string
 
-    Exercise:
+    ResponseWorkout:
+      allOf:
+        - $ref: "#/components/schemas/UpdateWorkout"
+        - type: object
+          properties:
+            permissions:
+              type: array
+              items:
+                $ref: "#/components/schemas/WorkoutPermissions"
+
+    WorkoutPermissions:
+      type: string
+      enum:
+        - read
+        - update
+        - delite
+
+    #---------------------------------ADD-------------------------------------
+    CreateWorkoutRequest:
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseRequest"
+        - type: object
+          properties:
+            createWorkout:
+              $ref: "#/components/schemas/CreateWorkout"
+            debug:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - success
+                    - error
+
+    CreateWorkoutResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            createdWorkout:
+              $ref: "#/components/schemas/ResponseWorkout"
+
+    #---------------------------------READ-------------------------------------
+    ReadWorkoutRequest:
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseRequest"
+        - type: object
+          properties:
+            workoutId:
+              type: string
+              description: "Id workout"
+            debug:
+              allOf:
+                - $ref: "#/components/schemas/Debug"
+                - type: object
+                  properties:
+                    stub:
+                      type: string
+                      enum:
+                        - success
+                        - emptyId
+                        - databaseError
+
+    ReadWorkoutResponse:
+      description: Структура для ответа на запрос с информацией об объявлении
+      allOf:
+        - $ref: "#/components/schemas/BaseMessage"
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            readWorkout:
+              $ref: "#/components/schemas/ResponseWorkout"
+
+    #---------------------------------UPDATE-------------------------------------
+
+    UpdateWorkoutRequest:
+      description: Структура для запроса обновления существующей тренеровки
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            createAd:
+              $ref: '#/components/schemas/UpdateWorkout'
+            debug:
+              allOf:
+                - $ref: '#/components/schemas/Debug'
+                - type: object
+                  properties:
+                    stub:
+                      type: string
+                      enum:
+                        - success
+                        - emptyTitle
+                        - databaseError
+
+    UpdateWorkoutResponse:
+      description: Структура для ответа на запрос с информацией об тренеровке
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            updatedAd:
+              $ref: '#/components/schemas/ResponseWorkout'
+
+    #---------------------------------DELETE-------------------------------------
+
+    DeleteWorkoutRequest:
+      description: Структура для запроса удаления тренеровки
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            deleteAdId:
+              type: string
+            debug:
+              allOf:
+                - $ref: '#/components/schemas/Debug'
+                - type: object
+                  properties:
+                    stub:
+                      type: string
+                      enum:
+                        - success
+                        - emptyId
+                        - databaseError
+
+    DeleteWorkoutResponse:
+      description: Структура для ответа на запрос об удалении тренеровки
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            deletedAd:
+              $ref: '#/components/schemas/ResponseWorkout'
+
+    #---------------------------------SERCH-------------------------------------
+
+    SearchWorkoutRequest:
+      description: Структура для запроса поиска объявлений
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          properties:
+            page:
+              $ref: '#/components/schemas/BasePaginatedRequest'
+
+    SearchWorkoutResponse:
+      description: Структура для ответа на запрос поиска объявлений
+      allOf:
+        - $ref: '#/components/schemas/BaseMessage'
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            page:
+              $ref: '#/components/schemas/BasePaginatedResponse'
+            foundAds:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResponseWorkout'
+
+    ExerciseTransfer:
       title: Упражнение
       type: object
       description: упражнение его повторения, вес и подходы
@@ -117,42 +290,57 @@ components:
         numberRepetitions:
           type: integer
           description: количество повторений
-        isOwnWeight:
+        OwnWeight:
           type: boolean
           description: упражнение с своим весом?
-        weigth:
+        weight:
           type: integer
           description: вес в упражнении
 
-    User:
-      title: Пользователь
+    ApiError:
       type: object
-      description: Пользователь
       properties:
-        id:
-          type: object
-        name:
+        message:
           type: string
-          description: Имя пользователя
-        age:
-          type: integer
-          description: Возраст
-        mass:
-          type: integer
-          description: Вес
-        regData:
-          type: object
-          $ref: '#/components/schemas/RegData'
+        field:
+          type: string
 
-    RegData:
-      title: Данные для регистрации
+    Debug:
       type: object
-      description: Данные при регистрации
       properties:
-        login:
+        mode:
           type: string
-        password:
+          enum:
+            - prod
+            - test
+            - stub
+
+    BasePaginatedRequest:
+      type: object
+      description: Структура с описанием запрашиваемой страницы в запросах списков
+      properties:
+        size:
+          type: integer
+          description: Размер запрашиваемой страницы
+          format: int32
+        lastId:
           type: string
+          description: Идентификатор последнего объекта предыдущей страницы
 
-
-
+    BasePaginatedResponse:
+      type: object
+      description: Структура с описанием страницы в ответе
+      properties:
+        size:
+          type: integer
+          description: Размер запрашиваемой страницы
+          format: int32
+        lastId:
+          type: string
+          description: Идентификатор последнего объекта предыдущей страницы
+        position:
+          type: string
+          enum:
+            - first
+            - middle
+            - last

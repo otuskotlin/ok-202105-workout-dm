@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
-
 plugins {
 	kotlin("multiplatform")
 	id("org.openapi.generator")
@@ -20,6 +18,7 @@ kotlin {
 	val jacksonVersion: String by project
 
 	sourceSets {
+
 		val commonMain by getting {
 			dependencies {
 				implementation(kotlin("stdlib-common"))
@@ -31,16 +30,21 @@ kotlin {
 				 */
 				implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
 				implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
+				implementation(project(":dm-transport-main-mp"))
+				implementation(project(":dm-transport-main-mp"))
 
 			}
 			//Добавление сгенерированных данных для компиляции
-			kotlin.srcDir("$buildDir/generate-resources/main/src/main/kotlin")
+//			kotlin.srcDir("$buildDir/generate-resources/main/src/main/kotlin")
+//			kotlin.srcDir("$buildDir/generate-resources/main/src/main/kotlin")
+
 		}
 		val commonTest by getting {
 			dependencies {
 				implementation(kotlin("test-common"))
 				implementation(kotlin("test-annotations-common"))
 
+				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 				implementation("io.kotest:kotest-assertions-core:$kotestVersion")
 				implementation("io.kotest:kotest-property:$kotestVersion")
 			}
@@ -59,6 +63,8 @@ kotlin {
 		val jvmMain by getting {
 			dependencies {
 				implementation(kotlin("stdlib-jdk8"))
+				implementation(project(":dm-transport-main-mp"))
+				implementation(project(":dm-transport-main-mp"))
 			}
 		}
 		val jvmTest by getting {
@@ -72,44 +78,44 @@ kotlin {
 }
 
 openApiGenerate {
-val openapiGroup = "${rootProject.group}.openapi"
-generatorName.set("kotlin") // Это и есть активный генератор
-packageName.set(openapiGroup)
-apiPackage.set("$openapiGroup.api")
-modelPackage.set("$openapiGroup.ru.otus.kotlin.openapi.models")
-invokerPackage.set("$openapiGroup.invoker")
-inputSpec.set("$rootDir/specs/SportProjectAPI.yaml")
+	val openapiGroup = "${rootProject.group}.openapi"
+	generatorName.set("kotlin") // Это и есть активный генератор
+	packageName.set(openapiGroup)
+	apiPackage.set("$openapiGroup.api")
+	modelPackage.set("$openapiGroup.ru.otus.kotlin.openapi.models")
+	invokerPackage.set("$openapiGroup.invoker")
+	inputSpec.set("$rootDir/specs/SportProjectAPI.yaml")
 
-/**
- * Здесь указываем, что нам нужны только модели, все остальное не нужно
- */
-globalProperties.apply {
-put("ru.otus.kotlin.openapi.models", "")
-put("modelDocs", "false")
-}
+	/**
+	 * Здесь указываем, что нам нужны только модели, все остальное не нужно
+	 */
+	globalProperties.apply {
+		put("ru.otus.kotlin.openapi.models", "")
+		put("modelDocs", "false")
+	}
 
-/**
- * Настройка дополнительных параметров из документации по генератору
- * https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin.md
- */
-configOptions.set(
-mapOf(
-"dateLibrary" to "string",
-"enumPropertyNaming" to "UPPERCASE",
-"serializationLibrary" to "jackson",
-"collectionType" to "list"
-)
-)
+	/**
+	 * Настройка дополнительных параметров из документации по генератору
+	 * https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin.md
+	 */
+	configOptions.set(
+		mapOf(
+			"dateLibrary" to "string",
+			"enumPropertyNaming" to "UPPERCASE",
+			"serializationLibrary" to "jackson",
+			"collectionType" to "list"
+		)
+	)
 
-/**
- * Так генерируется KMP версия
- */
-library.set("multiplatform")
+	/**
+	 * Так генерируется KMP версия
+	 */
+	library.set("multiplatform")
 }
 tasks {
-    withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).forEach {
-        it.dependsOn(openApiGenerate)
-    }
+	withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).forEach {
+		it.dependsOn(openApiGenerate)
+	}
 }
 
 
