@@ -28,7 +28,8 @@ data class UpdateWorkoutResponse (
     @SerialName(value = "messageType") override val messageType: kotlin.String? = null,
     @SerialName(value = "result") override val result: BaseResponse.Result? = null,
     @SerialName(value = "errors") override val errors: kotlin.collections.List<ApiError>? = null,
-    @SerialName(value = "updatedAd") val updatedAd: ResponseWorkout? = null
+    @SerialName(value = "updatedAd") val updatedAd: ResponseWorkout? = null,
+    override val requestId: String?
 ) : BaseMessage, BaseResponse{
 
 }

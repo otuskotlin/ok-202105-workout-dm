@@ -26,7 +26,8 @@ import kotlinx.serialization.*
 data class ReadWorkoutResponse (
     @SerialName(value = "messageType") override val messageType: kotlin.String? = null,
     @SerialName(value = "result") override val result: BaseResponse.Result? = null,
-    @SerialName(value = "errors") override val errors: kotlin.collections.List<ApiError>? = null,
-    @SerialName(value = "readWorkout") val readWorkout: ResponseWorkout? = null
+    @SerialName(value = "errors") override val errors: List<ApiError>? = null,
+    @SerialName(value = "readWorkout") val readWorkout: ResponseWorkout? = null,
+    override val requestId: String?
 ) : BaseMessage, BaseResponse
 

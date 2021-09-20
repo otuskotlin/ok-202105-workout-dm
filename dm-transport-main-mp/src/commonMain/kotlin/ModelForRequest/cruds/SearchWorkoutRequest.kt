@@ -25,9 +25,11 @@ import kotlinx.serialization.*
  */
 @Serializable
 data class SearchWorkoutRequest (
-    @SerialName(value = "messageType") override val messageType: kotlin.String? = null,
-    @SerialName(value = "requestId") override val requestId: kotlin.String? = null,
+    @SerialName(value = "messageType") override val messageType: String? = null,
+    @SerialName(value = "requestId") override val requestId: String? = null,
     @SerialName(value = "debug") override val debug: Debug? = null,
-    @SerialName(value = "page") val page: BasePaginatedRequest? = null
+    @SerialName(value = "page") val page: BasePaginatedRequest? = null,
+    @SerialName(value = "searchWorkoutId") val searchWorkoutId: String? = null
+
 ) : BaseMessage, BaseRequest
 

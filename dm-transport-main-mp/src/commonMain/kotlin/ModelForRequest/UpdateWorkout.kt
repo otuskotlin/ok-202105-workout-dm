@@ -11,9 +11,9 @@ import kotlinx.serialization.*
  */
 @Serializable
 data class UpdateWorkout (
-    @SerialName(value = "id") override val id: kotlin.String? = null,
+    @SerialName(value = "id") override val id: String? = null,
     /* Название упражнения */
-    @SerialName(value = "name") val name: kotlin.String? = null,
+    @SerialName(value = "name") val name: String? = null,
     /* Описание упражнения */
     @SerialName(value = "description") val description: kotlin.String? = null,
     @SerialName(value = "items") val items: kotlin.collections.List<ExerciseTransfer>? = null,

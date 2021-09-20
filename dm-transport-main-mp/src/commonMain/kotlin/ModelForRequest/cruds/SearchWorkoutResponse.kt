@@ -26,10 +26,11 @@ import ru.ru.otus.kotlin.kmp.transport.models.BasePaginatedResponse
  */
 @Serializable
 data class SearchWorkoutResponse (
-    @SerialName(value = "messageType") override val messageType: kotlin.String? = null,
+    @SerialName(value = "messageType") override val messageType: String? = null,
     @SerialName(value = "result") override val result: BaseResponse.Result? = null,
-    @SerialName(value = "errors") override val errors: kotlin.collections.List<ApiError>? = null,
+    @SerialName(value = "errors") override val errors: List<ApiError>? = null,
     @SerialName(value = "page") val page: BasePaginatedResponse? = null,
-    @SerialName(value = "foundAds") val foundAds: kotlin.collections.List<ResponseWorkout>? = null
+    @SerialName(value = "foundAds") val foundAds: List<ResponseWorkout>? = null,
+    override val requestId: String?
 ) : BaseMessage, BaseResponse
 

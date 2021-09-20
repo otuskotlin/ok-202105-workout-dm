@@ -24,9 +24,11 @@ import kotlinx.serialization.*
  */
 @Serializable
 data class DeleteWorkoutResponse (
-	@SerialName(value = "messageType") override val messageType: kotlin.String? = null,
-	@SerialName(value = "result") override val result: ModelForRequest.cruds.BaseResponse.Result? = null,
-	@SerialName(value = "errors") override val errors: kotlin.collections.List<ApiError>? = null,
-	@SerialName(value = "deletedAd") val deletedAd: ResponseWorkout? = null
-) : BaseMessage, ModelForRequest.cruds.BaseResponse
+	@SerialName(value = "messageType") override val messageType: String? = null,
+	@SerialName(value = "createdWorkout") val createdWorkout: ResponseWorkout? = null,
+	@SerialName(value = "result") override val result: BaseResponse.Result? = null,
+	@SerialName(value = "errors") override val errors: List<ApiError>? = null,
+	@SerialName(value = "deletedAd") val deletedAd: ResponseWorkout? = null,
+	override val requestId: String?
+) : BaseMessage, BaseResponse
 

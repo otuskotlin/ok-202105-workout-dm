@@ -5,10 +5,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 sealed interface BaseResponse {
+    val requestId: String?
     @SerialName(value = "result")
     val result: Result?
     @SerialName(value = "errors")
-    val errors: kotlin.collections.List<ApiError>?
+    val errors: List<ApiError>?
 
     @Serializable
     enum class Result(val value: kotlin.String) {
