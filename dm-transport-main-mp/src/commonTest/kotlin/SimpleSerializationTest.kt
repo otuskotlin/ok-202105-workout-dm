@@ -1,9 +1,11 @@
+import ModelForRequest.cruds.BaseMessage
+import ModelForRequest.cruds.CreateWorkoutRequest
+import ModelForRequest.cruds.UpdateWorkoutRequest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import ru.ru.otus.kotlin.kmp.transport.models.BaseMessage
 import ru.ru.otus.kotlin.kmp.transport.models.WorkoutAddRequest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -29,17 +31,26 @@ class SimpleSerializationTest {
 			prettyPrint = true
 			serializersModule = SerializersModule {
 				polymorphic(BaseMessage::class){
-					subclass(WorkoutAddRequest::class, WorkoutAddRequest.serializer())
+					subclass(CreateWorkoutRequest::class, CreateWorkoutRequest.serializer())
+					subclass(UpdateWorkoutRequest::class, UpdateWorkoutRequest.serializer())
 				}
 			}
 		}
 
-		val dto:BaseMessage = WorkoutAddRequest(
-			requestId = "12345"
-		)
-		val serializedString = jsonRequest.encodeToString(dto)
-		val deserializationDto = jsonRequest.decodeFromString<BaseMessage>(serializedString)
-		assertEquals(dto, deserializationDto)
+		val dtoCreate:BaseMessage = CreateWorkoutRequest(requestId = "1")
+		val dtoUpdate:BaseMessage = UpdateWorkoutRequest(requestId = "1")
+
+
+		val serializedCreate = jsonRequest.encodeToString(dtoCreate)
+		val serializedUpdate = jsonRequest.encodeToString(dtoUpdate)
+
+
+		val deserialCreate = jsonRequest.decodeFromString<BaseMessage>(serializedCreate)
+		val deserialUpdate = jsonRequest.decodeFromString<BaseMessage>(serializedUpdate)
+
+		println(deserialCreate::class)
+		println(deserialUpdate::class)
+
 	}
 
 
