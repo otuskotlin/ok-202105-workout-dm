@@ -18,3 +18,5 @@ include("dm-transport-main-openApi")
 include("dm-transport-main-mp")
 include("dm-transport-mp-Context-inModel")
 include("dm-transport-mapping-mp")
+include("dm-ktor-code-version")
+
