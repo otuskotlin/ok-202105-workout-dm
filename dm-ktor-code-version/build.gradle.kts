@@ -1,5 +1,6 @@
 val ktorVersion: String by project
 val logbackVersion: String by project
+val serializationVersionCore: String by project
 
 plugins {
 	application
@@ -17,6 +18,7 @@ repositories {
 dependencies {
 	implementation("io.ktor:ktor-server-core:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty:$ktorVersion")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersionCore")
 
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 

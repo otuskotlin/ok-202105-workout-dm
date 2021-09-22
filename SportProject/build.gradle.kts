@@ -14,7 +14,7 @@ kotlin {
 
 	val kotestVersion: String by project
 	val coroutinesVersion: String by project
-	val serializationVersion: String by project
+	val serializationVersionCore: String by project
 	val jacksonVersion: String by project
 
 	sourceSets {
@@ -23,7 +23,7 @@ kotlin {
 			dependencies {
 				implementation(kotlin("stdlib-common"))
 				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersionCore")
 
 				/**
 				 * Зависимости ниже мы забрали из сгенерированного build.gradle. Они нужны для компиляции подпроекта
@@ -44,7 +44,7 @@ kotlin {
 				implementation(kotlin("test-common"))
 				implementation(kotlin("test-annotations-common"))
 
-				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersionCore")
 				implementation("io.kotest:kotest-assertions-core:$kotestVersion")
 				implementation("io.kotest:kotest-property:$kotestVersion")
 			}
