@@ -15,14 +15,26 @@ repositories {
 	mavenCentral()
 }
 
+fun DependencyHandler.ktor(module: String, version: String = ktorVersion): String{
+	return "io.ktor:ktor-$module:$version"
+}
+
 dependencies {
-	implementation("io.ktor:ktor-server-core:$ktorVersion")
-	implementation("io.ktor:ktor-server-netty:$ktorVersion")
-	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersionCore")
+
+	implementation(project(":dm-transport-main-mp"))
+	implementation(project(":dm-transport-mp-Context-inModel"))
+	implementation(project(":dm-transport-mapping-mp"))
+
+	implementation(ktor("server-core"))
+	implementation(ktor("server-netty"))
+	implementation(ktor("serialization"))
+
+//	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersionCore")
+
 
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-	testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
+	testImplementation(ktor("server-tests"))
 	testImplementation(kotlin("test-junit"))
-//	testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+
 }
