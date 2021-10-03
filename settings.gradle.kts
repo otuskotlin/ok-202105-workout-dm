@@ -13,9 +13,7 @@ pluginManagement{
 	}
 }
 
-include("SportProject")
 include("dm-transport-main-mp")
 include("dm-transport-mp-Context-inModel")
 include("dm-transport-mapping-mp")
-include("dm-ktor-code-version")
-include("dm-stub-data")
+include("dm-app-sport-project-ktor")
