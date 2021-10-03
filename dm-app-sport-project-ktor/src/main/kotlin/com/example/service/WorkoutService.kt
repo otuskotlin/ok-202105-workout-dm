@@ -12,16 +12,28 @@ class WorkoutService {
 	}
 
 	fun readWorkout(context: MpContext) : MpContext{
-		return context
+		val workoutForContext = context.requestWorkout
+		return context.apply {
+			responseWorkout = workoutForContext
+		}
 	}
 	fun updateWorkout(context: MpContext) : MpContext{
-		return context
+		val workoutForContext = context.requestWorkout
+		return context.apply {
+			responseWorkout = workoutForContext
+		}
 	}
 	fun deleteWorkout(context: MpContext) : MpContext{
-		return context
+		val workoutForContext = context.requestWorkout
+		return context.apply {
+			responseWorkout = workoutForContext
+		}
 	}
 	fun searchWorkout(context: MpContext) : MpContext{
-		return context
+		val workoutForContext = context.requestWorkout
+		return context.apply {
+			responseWorkout = workoutForContext
+		}
 	}
 
 
