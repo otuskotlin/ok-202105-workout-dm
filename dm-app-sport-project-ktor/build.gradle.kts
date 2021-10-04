@@ -24,6 +24,7 @@ dependencies {
 	implementation(project(":dm-transport-main-mp"))
 	implementation(project(":dm-transport-mp-Context-inModel"))
 	implementation(project(":dm-transport-mapping-mp"))
+	implementation(project(":dm-stub-data"))
 
 	implementation(ktor("server-core"))
 	implementation(ktor("server-netty"))

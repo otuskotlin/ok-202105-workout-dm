@@ -12,6 +12,7 @@ class WorkoutService {
 	}
 
 	fun readWorkout(context: MpContext) : MpContext{
+		context.responseWorkout = StubData.getModel()
 		return context
 	}
 	fun updateWorkout(context: MpContext) : MpContext{

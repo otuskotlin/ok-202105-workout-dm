@@ -11,7 +11,7 @@ import InnerModel.WorkoutModel
 data class MpContext(
     val userSession: IUserSession<*> = IUserSession.Companion.EmptySession,
 
-    var onRequest: String = "",
+    var idRequest: String = "",
     var requestWorkoutId: WorkoutIdModel = WorkoutIdModel.NONE,
     var requestWorkout: WorkoutModel = WorkoutModel(),
     var responseWorkout: WorkoutModel = WorkoutModel(),
