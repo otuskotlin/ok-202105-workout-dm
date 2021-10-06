@@ -34,4 +34,7 @@ object StubData {
 		model?.let { stub.apply(it) }
 	}
 
+	fun getModels() = mutableListOf(stubWorkoutModel)
+	
+
 }

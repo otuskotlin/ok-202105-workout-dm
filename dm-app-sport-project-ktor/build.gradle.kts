@@ -11,10 +11,6 @@ application {
 	mainClass.set("com.example.ApplicationKt")
 }
 
-repositories {
-	mavenCentral()
-}
-
 fun DependencyHandler.ktor(module: String, version: String = ktorVersion): String{
 	return "io.ktor:ktor-$module:$version"
 }
@@ -27,7 +23,7 @@ dependencies {
 	implementation(project(":dm-stub-data"))
 
 	implementation(ktor("server-core"))
-	implementation(ktor("server-netty"))
+	implementation(ktor("server-tomcat"))
 	implementation(ktor("serialization"))
 
 //	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersionCore")
