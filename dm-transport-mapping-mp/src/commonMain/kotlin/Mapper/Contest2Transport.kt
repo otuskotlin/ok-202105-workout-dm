@@ -10,7 +10,6 @@ import ModelForRequest.ExerciseTransfer
 import ModelForRequest.ResponseWorkout
 import ModelForRequest.cruds.BaseResponse
 import ModelForRequest.cruds.CreateWorkoutResponse
-import ModelForRequest.cruds.DeleteWorkoutRequest
 import ModelForRequest.cruds.DeleteWorkoutResponse
 import ModelForRequest.cruds.ReadWorkoutResponse
 import ModelForRequest.cruds.SearchWorkoutResponse
@@ -18,7 +17,7 @@ import ModelForRequest.cruds.UpdateWorkoutResponse
 import context.MpContext
 
 fun MpContext.toCreateResponse() = CreateWorkoutResponse(
-	requestId = this.onRequest.takeIf { it.isNotBlank() },
+	requestId = this.idRequest.takeIf { it.isNotBlank() },
 	createdWorkout = responseWorkout.takeIf { it != WorkoutModel() }?.toTransport(),
 	errors = errors.takeIf { it.isNotEmpty() }?.map { it.toTransport() },
 	result = if (errors.find { it.level == IError.Level.ERROR } == null) BaseResponse.Result.SUCCESS
@@ -26,7 +25,7 @@ fun MpContext.toCreateResponse() = CreateWorkoutResponse(
 )
 
 fun MpContext.toReadResponse() = ReadWorkoutResponse(
-	requestId = this.onRequest.takeIf { it.isNotBlank() },
+	requestId = this.idRequest.takeIf { it.isNotBlank() },
 	readWorkout = responseWorkout.takeIf { it != WorkoutModel() }?.toTransport(),
 	errors = errors.takeIf { it.isNotEmpty() }?.map { it.toTransport() },
 	result = if (errors.find { it.level == IError.Level.ERROR } == null) BaseResponse.Result.SUCCESS
@@ -34,7 +33,7 @@ fun MpContext.toReadResponse() = ReadWorkoutResponse(
 )
 
 fun MpContext.toUpdateResponse() = UpdateWorkoutResponse(
-	requestId = this.onRequest.takeIf { it.isNotBlank() },
+	requestId = this.idRequest.takeIf { it.isNotBlank() },
 	updatedAd = responseWorkout.takeIf { it != WorkoutModel() }?.toTransport(),
 	errors = errors.takeIf { it.isNotEmpty() }?.map { it.toTransport() },
 	result = if (errors.find { it.level == IError.Level.ERROR } == null) BaseResponse.Result.SUCCESS
@@ -42,7 +41,7 @@ fun MpContext.toUpdateResponse() = UpdateWorkoutResponse(
 )
 
 fun MpContext.toDeleteResponse() = DeleteWorkoutResponse(
-	requestId = this.onRequest.takeIf { it.isNotBlank() },
+	requestId = this.idRequest.takeIf { it.isNotBlank() },
 	deletedAd = responseWorkout.takeIf { it != WorkoutModel() }?.toTransport(),
 	errors = errors.takeIf { it.isNotEmpty() }?.map { it.toTransport() },
 	result = if (errors.find { it.level == IError.Level.ERROR } == null) BaseResponse.Result.SUCCESS
@@ -50,7 +49,7 @@ fun MpContext.toDeleteResponse() = DeleteWorkoutResponse(
 )
 
 fun MpContext.toSearchResponse() = SearchWorkoutResponse(
-	requestId = this.onRequest.takeIf { it.isNotBlank() },
+	requestId = this.idRequest.takeIf { it.isNotBlank() },
 	foundAds = responseWorkouts.takeIf { it.isNotEmpty() }?.filter { it != WorkoutModel() }?.map { it.toTransport() },
 	errors = errors.takeIf { it.isNotEmpty() }?.map { it.toTransport() },
 	result = if (errors.find { it.level == IError.Level.ERROR } == null) BaseResponse.Result.SUCCESS

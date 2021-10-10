@@ -43,7 +43,8 @@ class SimpleSerializationTest {
 
 		val serializedCreate = jsonRequest.encodeToString(dtoCreate)
 		val serializedUpdate = jsonRequest.encodeToString(dtoUpdate)
-
+		println(serializedCreate)
+		println(serializedUpdate)
 
 		val deserialCreate = jsonRequest.decodeFromString<BaseMessage>(serializedCreate)
 		val deserialUpdate = jsonRequest.decodeFromString<BaseMessage>(serializedUpdate)

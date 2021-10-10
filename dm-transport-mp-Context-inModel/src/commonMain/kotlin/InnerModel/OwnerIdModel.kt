@@ -1,5 +1,8 @@
 package InnerModel
 
+import kotlin.jvm.JvmInline
+
+@JvmInline
 value class OwnerIdModel(private val value: String) {
 
 	companion object{
