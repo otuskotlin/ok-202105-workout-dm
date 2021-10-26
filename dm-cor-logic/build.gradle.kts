@@ -1,0 +1,19 @@
+plugins {
+	kotlin("jvm")
+}
+
+dependencies {
+
+    val coroutinesVersion: String by project
+
+	implementation(kotlin("stdlib"))
+
+	implementation(project(":dm-CoR-mp"))
+	implementation(project(":dm-stub-data"))
+	implementation(project(":dm-transport-mp-Context-inModel"))
+
+    testImplementation(kotlin("test"))
+	testImplementation(kotlin("test-junit"))
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+
+}

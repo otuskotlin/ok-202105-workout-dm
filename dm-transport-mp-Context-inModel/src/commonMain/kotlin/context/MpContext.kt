@@ -20,6 +20,8 @@ data class MpContext(
     var responseWorkouts: MutableList<WorkoutModel> = mutableListOf(),
     val errors: MutableList<IError> = mutableListOf(),
     var status: CorStatus = CorStatus.NONE,
+
+    var operation : MpOperations = MpOperations.NONE
 ) {
     enum class MpOperations {
         NONE,
