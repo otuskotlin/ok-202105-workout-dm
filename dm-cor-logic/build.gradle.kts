@@ -10,7 +10,7 @@ dependencies {
 
 	implementation(project(":dm-CoR-mp"))
 	implementation(project(":dm-stub-data"))
-	implementation(project(":dm-transport-mp-Context-inModel"))
+	implementation(project(":dm-transport-inner-model-mp"))
 
     testImplementation(kotlin("test"))
 	testImplementation(kotlin("test-junit"))

@@ -19,7 +19,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
                 implementation(project(":dm-transport-main-mp"))
-                implementation(project(":dm-transport-mp-Context-inModel"))
+                implementation(project(":dm-transport-inner-model-mp"))
                 implementation(project(":dm-transport-mapping-mp"))
                 implementation(project(":dm-stub-data"))
             }

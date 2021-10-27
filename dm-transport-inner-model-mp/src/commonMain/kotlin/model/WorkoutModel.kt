@@ -1,4 +1,4 @@
-package InnerModel
+package model
 
 data class WorkoutModel(
 	var id: WorkoutIdModel = WorkoutIdModel.NONE,

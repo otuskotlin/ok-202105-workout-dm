@@ -1,4 +1,4 @@
-package InnerModel
+package model
 
 data class ExerciseModel(
 	var nameExercise: String = "",

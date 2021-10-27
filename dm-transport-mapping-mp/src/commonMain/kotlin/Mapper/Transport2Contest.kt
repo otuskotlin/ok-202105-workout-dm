@@ -1,10 +1,10 @@
 package Mapper
 
-import InnerModel.ExerciseModel
-import InnerModel.OwnerIdModel
-import InnerModel.PaginatedModel
-import InnerModel.WorkoutIdModel
-import InnerModel.WorkoutModel
+import model.ExerciseModel
+import model.OwnerIdModel
+import model.PaginatedModel
+import model.WorkoutIdModel
+import model.WorkoutModel
 import ModelForRequest.BasePaginatedRequest
 import ModelForRequest.CreateWorkout
 import ModelForRequest.ExerciseTransfer

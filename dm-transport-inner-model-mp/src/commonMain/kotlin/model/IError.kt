@@ -1,4 +1,4 @@
-package InnerModel
+package model
 
 interface IError {
     val field: String

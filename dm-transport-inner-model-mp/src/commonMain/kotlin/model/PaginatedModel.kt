@@ -1,4 +1,4 @@
-package InnerModel
+package model
 
 data class PaginatedModel(
     var size: Int = Int.MIN_VALUE,

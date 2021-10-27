@@ -1,4 +1,4 @@
-package InnerModel
+package model
 
 import context.MpContext
 

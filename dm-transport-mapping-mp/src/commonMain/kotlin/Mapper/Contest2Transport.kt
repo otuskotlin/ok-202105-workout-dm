@@ -1,10 +1,10 @@
 package Mapper
 
-import InnerModel.ExerciseModel
-import InnerModel.IError
-import InnerModel.OwnerIdModel
-import InnerModel.WorkoutIdModel
-import InnerModel.WorkoutModel
+import model.ExerciseModel
+import model.IError
+import model.OwnerIdModel
+import model.WorkoutIdModel
+import model.WorkoutModel
 import ModelForRequest.ApiError
 import ModelForRequest.ExerciseTransfer
 import ModelForRequest.ResponseWorkout
