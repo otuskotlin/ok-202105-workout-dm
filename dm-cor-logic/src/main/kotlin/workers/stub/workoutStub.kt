@@ -24,6 +24,9 @@ internal fun CorChainDsl<MpContext>.workoutStub(title: String) {
 			on { status == CorStatus.RUNNING }
 			handle {
 				status = CorStatus.FAILING
+				addError(
+					e = Exception("No matching workerts for stubCase: ${mpStubCases}")
+				)
 			}
 		}
 	}
