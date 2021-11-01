@@ -6,7 +6,7 @@ import handlers.CorChainDsl
 import handlers.chain
 import handlers.worker
 
-internal fun CorChainDsl<MpContext>.prepateAnswe(title: String) {
+internal fun CorChainDsl<MpContext>.prepareAnswer(title: String) {
 	chain {
 		this.title = title
 		worker {
@@ -21,6 +21,9 @@ internal fun CorChainDsl<MpContext>.prepateAnswe(title: String) {
 			on { status != CorStatus.SUCCESS }
 			handle {
 				status = CorStatus.ERROR
+				addError(
+					e = Exception("No matching workers for stubCase: ${mpStubCases}")
+				)
 			}
 		}
 	}

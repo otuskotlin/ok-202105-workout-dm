@@ -5,7 +5,7 @@ import chain
 import context.MpContext
 import workers.chainInit
 import workers.checkOperation
-import workers.prepateAnswe
+import workers.prepareAnswer
 import workers.stub.workoutStub
 
 object WorkoutCreate : ICorExec<MpContext> by chain<MpContext>({
@@ -18,7 +18,7 @@ object WorkoutCreate : ICorExec<MpContext> by chain<MpContext>({
 	workoutStub("Обработка стабкейса")
 
 	//db worker
-	prepateAnswe("Подготовка ответа")
+	prepareAnswer("Подготовка ответа")
 
 }).build()
 

@@ -7,9 +7,17 @@ class WorkoutCrud {
 		WorkoutCreate.exec(cts)
 	}
 
-	suspend fun read(cts: MpContext) {}
-	suspend fun update(cts: MpContext) {}
-	suspend fun delete(cts: MpContext) {}
-	suspend fun search(cts: MpContext) {}
+	suspend fun read(cts: MpContext) {
+//		WorkoutRead.exec(cts)
+	}
+	suspend fun update(cts: MpContext) {
+//		WorkoutUpdate.exec(cts)
+	}
+	suspend fun delete(cts: MpContext) {
+//		WorkoutDelete.exec(cts)
+	}
+	suspend fun search(cts: MpContext) {
+//		WorkoutSearch.exec(cts)
+	}
 
 }

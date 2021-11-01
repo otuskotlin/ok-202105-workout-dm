@@ -1,18 +1,20 @@
-package com.example.service
+package service;
 
+import Mapper.setQuery
+import Mapper.toCreateResponse
+import ModelForRequest.cruds.CreateWorkoutRequest
+import ModelForRequest.cruds.CreateWorkoutResponse
 import StubData
+import WorkoutCrud
 import context.MpContext
 
 class WorkoutService(
-	// TODO: 26.10.2021 тут наверное депенденси инжектион будет)
-	val crud: WorkoutCrud()
+	var crud: WorkoutCrud
 ) {
 
-	fun createWorkout(context: MpContext): MpContext {
-		val workoutForContext = context.requestWorkout
-		return context.apply {
-			responseWorkout = workoutForContext
-		}
+	suspend fun createWorkout(context: MpContext, request: CreateWorkoutRequest): CreateWorkoutResponse{
+		crud.create(context.setQuery(request))
+		return context.toCreateResponse()
 	}
 
 	fun readWorkout(context: MpContext): MpContext {
