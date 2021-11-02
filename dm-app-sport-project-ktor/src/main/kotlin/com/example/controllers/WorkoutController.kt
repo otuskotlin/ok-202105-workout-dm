@@ -16,7 +16,8 @@ class WorkoutController(private val workoutService: WorkoutService) {
 	suspend fun create(call: ApplicationCall) {
 		val request = call.receive<CreateWorkoutRequest>()
 		val context = MpContext()
-		call.respond(workoutService.createWorkout(context, request))
+		val createWorkout = workoutService.createWorkout(context, request)
+		call.respond(createWorkout)
 	}
 
 	suspend fun read(call: ApplicationCall) {

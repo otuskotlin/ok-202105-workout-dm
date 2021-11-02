@@ -11,7 +11,6 @@ fun Application.configureRouting() {
 	// Starting point for a Ktor app:
 
 	val crud = WorkoutCrud()
-
 	val workoutService = WorkoutService(crud)
 	val workoutController = WorkoutController(workoutService)
 

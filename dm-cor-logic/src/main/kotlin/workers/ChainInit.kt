@@ -11,5 +11,6 @@ internal fun CorChainDsl<MpContext>.chainInit(title: String) =
 		on { status == CorStatus.NONE }
 		handle {
 			status = CorStatus.RUNNING
+			println("Chain init, ${this.status}")
 		}
 	}

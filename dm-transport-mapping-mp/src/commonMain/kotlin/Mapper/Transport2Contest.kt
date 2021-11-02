@@ -7,6 +7,7 @@ import model.WorkoutIdModel
 import model.WorkoutModel
 import ModelForRequest.BasePaginatedRequest
 import ModelForRequest.CreateWorkout
+import ModelForRequest.Debug
 import ModelForRequest.ExerciseTransfer
 import ModelForRequest.UpdateWorkout
 import ModelForRequest.cruds.CreateWorkoutRequest
@@ -15,31 +16,34 @@ import ModelForRequest.cruds.ReadWorkoutRequest
 import ModelForRequest.cruds.SearchWorkoutRequest
 import ModelForRequest.cruds.UpdateWorkoutRequest
 import context.MpContext
-
+import model.MpStubCases
 
 fun MpContext.setQuery(query: CreateWorkoutRequest) = apply {
 	operation = MpContext.MpOperations.CREATE
 	idRequest = query.requestId ?: ""
 	requestWorkout = query.createWorkout?.toModel() ?: WorkoutModel()
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: ReadWorkoutRequest) = apply {
 	operation = MpContext.MpOperations.READ
 	idRequest = query.requestId ?: ""
 	requestWorkoutId = WorkoutIdModel(query.workoutId ?: "")
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: UpdateWorkoutRequest) = apply {
 	operation = MpContext.MpOperations.UPDATE
 	idRequest = query.requestId ?: ""
 	requestWorkout = query.updateWorkout?.toModel() ?: WorkoutModel()
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: DeleteWorkoutRequest) = apply {
 	this.operation = MpContext.MpOperations.DELETE
 	idRequest = query.requestId ?: ""
 	requestWorkoutId = WorkoutIdModel(query.deleteAdId ?: "")
-
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: SearchWorkoutRequest) = apply {
@@ -47,6 +51,7 @@ fun MpContext.setQuery(query: SearchWorkoutRequest) = apply {
 	idRequest = query.requestId ?: ""
 	requestWorkoutId = WorkoutIdModel(query.searchWorkoutId ?: "")
 	requestPage = query.page?.toModel() ?: PaginatedModel()
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun BasePaginatedRequest.toModel() = PaginatedModel(
@@ -76,3 +81,9 @@ fun UpdateWorkout.toModel() = WorkoutModel(
 	description = description ?: "",
 	items = this.items?.map { it.toModel() }?.toMutableList() ?: mutableListOf()
 )
+
+private fun Debug.StubCase?.toModel() = when(this) {
+	Debug.StubCase.SUCCESS -> MpStubCases.SUCCESS
+	Debug.StubCase.DATABASE_ERROR -> MpStubCases.DATABASE_ERROR
+	null -> MpStubCases.NONE
+}

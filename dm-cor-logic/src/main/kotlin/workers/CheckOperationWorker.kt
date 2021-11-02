@@ -14,6 +14,7 @@ internal fun CorChainDsl<MpContext>.checkOperation(title: String, targetOperatio
 		}
 		handle {
 			status = CorStatus.FAILING
+			print("check operation FAILING")
 			addError(
 				e = Exception("Expected ${targetOperation} but was ${operation}")
 			)

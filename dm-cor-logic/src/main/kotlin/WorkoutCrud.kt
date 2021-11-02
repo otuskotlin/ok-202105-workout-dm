@@ -1,4 +1,5 @@
 import chains.WorkoutCreate
+import chains.WorkoutRead
 import context.MpContext
 
 class WorkoutCrud {
@@ -8,7 +9,7 @@ class WorkoutCrud {
 	}
 
 	suspend fun read(cts: MpContext) {
-//		WorkoutRead.exec(cts)
+		WorkoutRead.exec(cts)
 	}
 	suspend fun update(cts: MpContext) {
 //		WorkoutUpdate.exec(cts)
