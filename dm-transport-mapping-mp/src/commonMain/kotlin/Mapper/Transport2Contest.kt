@@ -18,27 +18,32 @@ import context.MpContext
 
 
 fun MpContext.setQuery(query: CreateWorkoutRequest) = apply {
-	this.idRequest = query.requestId ?: ""
-	this.requestWorkout = query.createWorkout?.toModel() ?: WorkoutModel()
+	operation = MpContext.MpOperations.CREATE
+	idRequest = query.requestId ?: ""
+	requestWorkout = query.createWorkout?.toModel() ?: WorkoutModel()
 }
 
 fun MpContext.setQuery(query: ReadWorkoutRequest) = apply {
-	this.idRequest = query.requestId ?: ""
-	this.requestWorkoutId = WorkoutIdModel(query.workoutId ?: "")
+	operation = MpContext.MpOperations.READ
+	idRequest = query.requestId ?: ""
+	requestWorkoutId = WorkoutIdModel(query.workoutId ?: "")
 }
 
 fun MpContext.setQuery(query: UpdateWorkoutRequest) = apply {
-	this.idRequest = query.requestId ?: ""
-	this.requestWorkout = query.updateWorkout?.toModel() ?: WorkoutModel()
+	operation = MpContext.MpOperations.UPDATE
+	idRequest = query.requestId ?: ""
+	requestWorkout = query.updateWorkout?.toModel() ?: WorkoutModel()
 }
 
 fun MpContext.setQuery(query: DeleteWorkoutRequest) = apply {
+	this.operation = MpContext.MpOperations.DELETE
 	idRequest = query.requestId ?: ""
 	requestWorkoutId = WorkoutIdModel(query.deleteAdId ?: "")
 
 }
 
 fun MpContext.setQuery(query: SearchWorkoutRequest) = apply {
+	this.operation = MpContext.MpOperations.SEARCH
 	idRequest = query.requestId ?: ""
 	requestWorkoutId = WorkoutIdModel(query.searchWorkoutId ?: "")
 	requestPage = query.page?.toModel() ?: PaginatedModel()

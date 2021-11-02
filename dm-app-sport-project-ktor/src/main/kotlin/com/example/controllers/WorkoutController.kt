@@ -1,10 +1,5 @@
 package com.example.controllers
 
-import Mapper.setQuery
-import Mapper.toDeleteResponse
-import Mapper.toReadResponse
-import Mapper.toSearchResponse
-import Mapper.toUpdateResponse
 import ModelForRequest.cruds.CreateWorkoutRequest
 import ModelForRequest.cruds.DeleteWorkoutRequest
 import ModelForRequest.cruds.ReadWorkoutRequest
@@ -19,32 +14,32 @@ import service.WorkoutService
 class WorkoutController(private val workoutService: WorkoutService) {
 
 	suspend fun create(call: ApplicationCall) {
-		val createWorkoutRequest = call.receive<CreateWorkoutRequest>()
+		val request = call.receive<CreateWorkoutRequest>()
 		val context = MpContext()
-		call.respond(workoutService.createWorkout(context, createWorkoutRequest))
+		call.respond(workoutService.createWorkout(context, request))
 	}
 
 	suspend fun read(call: ApplicationCall) {
-		val createWorkoutRequest = call.receive<ReadWorkoutRequest>()
-		val context = MpContext().setQuery(createWorkoutRequest)
-		call.respond(workoutService.readWorkout(context).toReadResponse())
+		val request = call.receive<ReadWorkoutRequest>()
+		val context = MpContext()
+		call.respond(workoutService.readWorkout(context, request))
 	}
 
 	suspend fun update(call: ApplicationCall) {
-		val createWorkoutRequest = call.receive<UpdateWorkoutRequest>()
-		val context = MpContext().setQuery(createWorkoutRequest)
-		call.respond(workoutService.updateWorkout(context).toUpdateResponse())
+		val request = call.receive<UpdateWorkoutRequest>()
+		val context = MpContext()
+		call.respond(workoutService.updateWorkout(context, request))
 	}
 
 	suspend fun delete(call: ApplicationCall) {
-		val createWorkoutRequest = call.receive<DeleteWorkoutRequest>()
-		val context = MpContext().setQuery(createWorkoutRequest)
-		call.respond(workoutService.deleteWorkout(context).toDeleteResponse())
+		val request = call.receive<DeleteWorkoutRequest>()
+		val context = MpContext()
+		call.respond(workoutService.deleteWorkout(context, request))
 	}
 
 	suspend fun search(call: ApplicationCall) {
-		val createWorkoutRequest = call.receive<SearchWorkoutRequest>()
-		val context = MpContext().setQuery(createWorkoutRequest)
-		call.respond(workoutService.searchWorkout(context).toSearchResponse())
+		val request = call.receive<SearchWorkoutRequest>()
+		val context = MpContext()
+		call.respond(workoutService.searchWorkout(context, request))
 	}
 }

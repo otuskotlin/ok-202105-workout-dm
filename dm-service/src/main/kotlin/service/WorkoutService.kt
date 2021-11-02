@@ -1,9 +1,12 @@
-package service;
+package service
 
 import Mapper.setQuery
 import Mapper.toCreateResponse
-import ModelForRequest.cruds.CreateWorkoutRequest
-import ModelForRequest.cruds.CreateWorkoutResponse
+import Mapper.toDeleteResponse
+import Mapper.toReadResponse
+import Mapper.toSearchResponse
+import Mapper.toUpdateResponse
+import ModelForRequest.cruds.*
 import StubData
 import WorkoutCrud
 import context.MpContext
@@ -12,29 +15,33 @@ class WorkoutService(
 	var crud: WorkoutCrud
 ) {
 
-	suspend fun createWorkout(context: MpContext, request: CreateWorkoutRequest): CreateWorkoutResponse{
+	suspend fun createWorkout(context: MpContext, request: CreateWorkoutRequest): CreateWorkoutResponse {
 		crud.create(context.setQuery(request))
 		return context.toCreateResponse()
 	}
 
-	fun readWorkout(context: MpContext): MpContext {
+	suspend fun readWorkout(context: MpContext, request: ReadWorkoutRequest): ReadWorkoutResponse {
 		context.responseWorkout = StubData.getModel()
-		return context
+		crud.create(context.setQuery(request))
+		return context.toReadResponse()
 	}
 
-	fun updateWorkout(context: MpContext): MpContext {
+	suspend fun updateWorkout(context: MpContext, request: UpdateWorkoutRequest): UpdateWorkoutResponse {
 		context.responseWorkout = StubData.getModel()
-		return context
+		crud.create(context.setQuery(request))
+		return context.toUpdateResponse()
 	}
 
-	fun deleteWorkout(context: MpContext): MpContext {
+	suspend fun deleteWorkout(context: MpContext, request: DeleteWorkoutRequest): DeleteWorkoutResponse {
 		context.responseWorkout = StubData.getModel()
-		return context
+		crud.create(context.setQuery(request))
+		return context.toDeleteResponse()
 	}
 
-	fun searchWorkout(context: MpContext): MpContext {
+	suspend fun searchWorkout(context: MpContext, request: SearchWorkoutRequest): SearchWorkoutResponse {
 		context.responseWorkouts = StubData.getModels().toMutableList()
-		return context
+		crud.create(context.setQuery(request))
+		return context.toSearchResponse()
 	}
 
 }
