@@ -1,5 +1,8 @@
 import chains.WorkoutCreate
+import chains.WorkoutDelete
 import chains.WorkoutRead
+import chains.WorkoutSearch
+import chains.WorkoutUpdate
 import context.MpContext
 
 class WorkoutCrud {
@@ -11,14 +14,17 @@ class WorkoutCrud {
 	suspend fun read(cts: MpContext) {
 		WorkoutRead.exec(cts)
 	}
+
 	suspend fun update(cts: MpContext) {
-//		WorkoutUpdate.exec(cts)
+		WorkoutUpdate.exec(cts)
 	}
+
 	suspend fun delete(cts: MpContext) {
-//		WorkoutDelete.exec(cts)
+		WorkoutDelete.exec(cts)
 	}
+
 	suspend fun search(cts: MpContext) {
-//		WorkoutSearch.exec(cts)
+		WorkoutSearch.exec(cts)
 	}
 
 }
