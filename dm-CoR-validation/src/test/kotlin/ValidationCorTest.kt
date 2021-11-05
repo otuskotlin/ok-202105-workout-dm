@@ -1,49 +1,36 @@
 import context.MpContext
-import cor.validation
 import kotlinx.coroutines.runBlocking
-import lib.ValidationResult
-import lib.exception.ValidationError
-import lib.validators.StringNotEmptyValidator
 import org.junit.Test
+import validators.ValidatorStringNonEmpty
 import kotlin.test.assertEquals
 
 class ValidationCorTest {
 
 	@Test
-	fun `test validation in cor`() {
-		val context = MpContext()
-
-		val chain = chain<TestDataContext> {
+	fun pipelineValidation() {
+		val chain = chain<TestContext> {
 			validation {
-
-				errorhandler { result: ValidationResult ->
-					if (!result.isSuccess) {
-						this.errors.addAll(result.errors)
+				errorHandler { v: ValidationResult ->
+					if (!v.isSuccess) {
+						errors.addAll(v.errors)
 					}
-
 				}
-				validate {
-					validator(StringNotEmptyValidator() on { x })
-				}
-				validate {
-					validator(StringNotEmptyValidator() on { y })
-				}
+				validate<String?> { validator(ValidatorStringNonEmpty()); on { x } }
+				validate<String?> { validator(ValidatorStringNonEmpty()); on { y } }
 			}
 		}
+
+		val c = TestContext()
+
 		runBlocking {
-			val context = TestDataContext()
-
-			assertEquals(context.errors.size, 0)
-			chain.build().exec(context)
-			assertEquals(context.errors.size, 2)
+			chain.build().exec(c)
+			assertEquals(2, c.errors.size)
 		}
-
 	}
 
-	data class TestDataContext(
+	data class TestContext(
 		val x: String = "",
 		val y: String = "",
-
-		val errors: List<ValidationError> = listOf()
+		val errors: MutableList<IValidationError> = mutableListOf()
 	)
 }

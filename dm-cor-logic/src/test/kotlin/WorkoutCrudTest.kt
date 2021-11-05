@@ -12,6 +12,7 @@ class WorkoutCrudTest {
 	fun workoutCreateSuccess() {
 		val crud = WorkoutCrud()
 		val context = MpContext(
+			idRequest = "01",
 			requestWorkout = StubData.getModel { id = WorkoutIdModel.NONE },
 			operation = MpContext.MpOperations.CREATE,
 			mpStubCases = MpStubCases.SUCCESS
@@ -30,6 +31,23 @@ class WorkoutCrudTest {
 			assertEquals(expected.ownerId, ownerId)
 		}
 	}
+	@Test
+	fun workoutCreateBeadValidation() {
+		val crud = WorkoutCrud()
+		val context = MpContext(
+			idRequest = "", //Поле пустое
+			requestWorkout = StubData.getModel { id = WorkoutIdModel.NONE },
+			operation = MpContext.MpOperations.CREATE,
+			mpStubCases = MpStubCases.SUCCESS
+		)
+		runBlocking {
+			crud.create(context)
+		}
+
+		val expected = StubData.getModel()
+		assertEquals(CorStatus.FAILING, context.status)
+	}
+
 
 	@Test
 	fun workoutReadSuccess() {

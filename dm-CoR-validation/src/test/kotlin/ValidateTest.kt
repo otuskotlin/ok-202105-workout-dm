@@ -1,4 +1,4 @@
-import lib.validators.StringNotEmptyValidator
+import validators.ValidatorStringNonEmpty
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIsNot
@@ -12,7 +12,7 @@ class ValidateTest {
 	fun `String validation ok`() {
 		val data = "not Empty"
 
-		val validator = StringNotEmptyValidator()
+		val validator = ValidatorStringNonEmpty()
 		val res = validator.validate(data)
 
 

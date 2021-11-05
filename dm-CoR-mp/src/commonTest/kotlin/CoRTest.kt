@@ -4,6 +4,7 @@ import handlers.worker
 import kotlin.test.Test
 
 class CorBaseTest {
+
 	@Test
 	fun createCor() {
 

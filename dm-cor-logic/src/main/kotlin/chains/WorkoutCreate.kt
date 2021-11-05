@@ -2,7 +2,11 @@ package chains
 
 import ICorExec
 import chain
+import context.CorStatus
 import context.MpContext
+import model.CommonErrorModel
+import validation
+import validators.ValidatorStringNonEmpty
 import validators.workers.chainInit
 import validators.workers.checkOperation
 import validators.workers.prepareAnswer
@@ -14,7 +18,22 @@ object WorkoutCreate : ICorExec<MpContext> by chain<MpContext>({
 
 	chainInit(" Инициализация чейна")
 
-	//validation
+	validation {
+		errorHandler { validationResult ->
+			if (validationResult.isSuccess) return@errorHandler
+			val errs = validationResult.errors.map {
+				CommonErrorModel(message = it.message)
+			}
+			errors.addAll(errs)
+			status = CorStatus.FAILING
+		}
+
+		validate<String?> {
+			on { this.idRequest }
+			validator(ValidatorStringNonEmpty())
+		}
+	}
+
 	workoutStub("Обработка стабкейса")
 
 	//db worker
