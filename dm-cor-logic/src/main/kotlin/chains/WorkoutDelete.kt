@@ -3,10 +3,10 @@ package chains
 import ICorExec
 import chain
 import context.MpContext
-import workers.chainInit
-import workers.checkOperation
-import workers.prepareAnswer
-import workers.stub.workoutStub
+import validators.workers.chainInit
+import validators.workers.checkOperation
+import validators.workers.prepareAnswer
+import validators.workers.stub.workoutStub
 
 object WorkoutDelete : ICorExec<MpContext> by chain<MpContext>({
 
