@@ -26,5 +26,4 @@ class WorkoutCrud {
 	suspend fun search(cts: MpContext) {
 		WorkoutSearch.exec(cts)
 	}
-
 }
