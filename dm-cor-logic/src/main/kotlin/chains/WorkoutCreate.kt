@@ -6,8 +6,8 @@ import context.CorStatus
 import context.MpContext
 import model.CommonErrorModel
 import validation
-import validators.ValidatorStringNonEmpty
 import validators.workers.chainInit
+import validators.workers.checkIdRequest
 import validators.workers.checkOperation
 import validators.workers.prepareAnswer
 import validators.workers.stub.workoutStub
@@ -28,10 +28,7 @@ object WorkoutCreate : ICorExec<MpContext> by chain<MpContext>({
 			status = CorStatus.FAILING
 		}
 
-		validate<String?> {
-			on { this.idRequest }
-			validator(ValidatorStringNonEmpty())
-		}
+		checkIdRequest()
 	}
 
 	workoutStub("Обработка стабкейса")
@@ -40,4 +37,3 @@ object WorkoutCreate : ICorExec<MpContext> by chain<MpContext>({
 	prepareAnswer("Подготовка ответа")
 
 }).build()
-
