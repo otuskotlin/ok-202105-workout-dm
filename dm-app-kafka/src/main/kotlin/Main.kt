@@ -1,0 +1,8 @@
+
+
+fun main(){
+	print("OK")
+
+
+
+}
