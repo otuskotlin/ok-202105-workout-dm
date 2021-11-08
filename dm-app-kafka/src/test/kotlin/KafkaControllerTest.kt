@@ -1,10 +1,6 @@
 import ModelForRequest.CreateWorkout
 import ModelForRequest.Debug
-import ModelForRequest.cruds.BaseMessage
-import ModelForRequest.cruds.CreateWorkoutRequest
-import ModelForRequest.cruds.CreateWorkoutResponse
-import ModelForRequest.cruds.ReadWorkoutRequest
-import ModelForRequest.cruds.UpdateWorkoutRequest
+import ModelForRequest.cruds.*
 import kafka.AppKafkaConfig
 import kafka.AppKafkaConsumer
 import kotlinx.serialization.decodeFromString
@@ -21,6 +17,8 @@ import org.apache.kafka.common.serialization.StringSerializer
 import org.junit.Test
 import java.util.*
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class KafkaControllerTest {
 	val jsonRequest = Json {
@@ -28,8 +26,16 @@ class KafkaControllerTest {
 		serializersModule = SerializersModule {
 			polymorphic(BaseMessage::class) {
 				subclass(CreateWorkoutRequest::class, CreateWorkoutRequest.serializer())
-				subclass(UpdateWorkoutRequest::class, UpdateWorkoutRequest.serializer())
 				subclass(ReadWorkoutRequest::class, ReadWorkoutRequest.serializer())
+				subclass(UpdateWorkoutRequest::class, UpdateWorkoutRequest.serializer())
+				subclass(DeleteWorkoutRequest::class, DeleteWorkoutRequest.serializer())
+				subclass(SearchWorkoutRequest::class, SearchWorkoutRequest.serializer())
+
+				subclass(CreateWorkoutResponse::class, CreateWorkoutResponse.serializer())
+				subclass(ReadWorkoutResponse::class, ReadWorkoutResponse.serializer())
+				subclass(UpdateWorkoutResponse::class, UpdateWorkoutResponse.serializer())
+				subclass(DeleteWorkoutResponse::class, DeleteWorkoutResponse.serializer())
+				subclass(SearchWorkoutResponse::class, SearchWorkoutResponse.serializer())
 			}
 		}
 	}
@@ -42,32 +48,35 @@ class KafkaControllerTest {
 			kafkaConsumer = consumer,
 			kafkaProducer = producer,
 		)
+		val createWorkout = CreateWorkoutRequest(
+//				messageType = "create",
+			requestId = "123",
+			debug = Debug(
+				Debug.Mode.STUB,
+				stubCase = Debug.StubCase.SUCCESS
+			),
+			createWorkout = CreateWorkout(
+				id = "1234",
+				ownerId = "123",
+				name = "test",
+				description = "Some workout",
+				items = listOf()
+			),
+			status = null
+		)
+		val createWorkoutJson = createWorkout.toJson()
+
 		val app = AppKafkaConsumer(config)
 		consumer.schedulePollTask {
 			consumer.rebalance(Collections.singletonList(TopicPartition(config.kafkaTopicIn, 0)))
-			val string = CreateWorkoutRequest(
-//				messageType = "create",
-				requestId = "123",
-				debug = Debug(
-					Debug.Mode.STUB,
-					stubCase = Debug.StubCase.SUCCESS
-				),
-				createWorkout = CreateWorkout(
-					id = "1234",
-					ownerId = "123",
-					name = "test",
-					description = "Some workout",
-					items = listOf()
-				),
-				status = null
-			).toJson()
+
 			consumer.addRecord(
 				ConsumerRecord(
 					config.kafkaTopicIn,
 					PARTITION,
 					0L,
 					"test-1",
-					string
+					createWorkoutJson
 				)
 			)
 			app.stop()
@@ -81,16 +90,18 @@ class KafkaControllerTest {
 		app.run()
 
 		val message = producer.history().first()
-		val result = jsonRequest.decodeFromString<CreateWorkoutResponse>(message.value())
-		assertEquals("123", result.requestId)
-		assertEquals("Some workout", result.createdWorkout?.description)
+		val jsonTest = message.value()
+		val result = jsonRequest.decodeFromString<BaseMessage>(jsonTest)
+		assertNotNull(result)
+		assertTrue(result is CreateWorkoutResponse)
+		assertEquals(createWorkout.requestId ,result.requestId)
 	}
 
 	companion object {
 		const val PARTITION = 0
 	}
 
-	private fun CreateWorkoutRequest.toJson(): String = jsonRequest.encodeToString(this)
+	private fun BaseMessage.toJson(): String = jsonRequest.encodeToString(this)
 
 }
 

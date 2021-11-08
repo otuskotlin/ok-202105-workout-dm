@@ -1,8 +1,7 @@
 package kafka
 
-import ModelForRequest.cruds.BaseMessage
-import ModelForRequest.cruds.CreateWorkoutRequest
-import ModelForRequest.cruds.UpdateWorkoutRequest
+import ModelForRequest.cruds.*
+import ModelForRequest.jsonRequest
 import context.MpContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -25,15 +24,6 @@ class AppKafkaConsumer(private val config: AppKafkaConfig) {
 	private val consumer = config.kafkaConsumer
 	private val producer = config.kafkaProducer
 	private val service = config.service
-	val jsonRequest = Json {
-		prettyPrint = true
-////		serializersModule = SerializersModule {
-////			polymorphic(BaseMessage::class) {
-////				subclass(CreateWorkoutRequest::class, CreateWorkoutRequest.serializer())
-////				subclass(UpdateWorkoutRequest::class, UpdateWorkoutRequest.serializer())
-////			}
-////		}
-	}
 	private val process = AtomicBoolean(true)
 
 	fun run() = runBlocking {
