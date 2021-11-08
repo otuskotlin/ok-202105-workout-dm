@@ -1,12 +1,13 @@
 package Mapper
 
-import InnerModel.ExerciseModel
-import InnerModel.OwnerIdModel
-import InnerModel.PaginatedModel
-import InnerModel.WorkoutIdModel
-import InnerModel.WorkoutModel
+import model.ExerciseModel
+import model.OwnerIdModel
+import model.PaginatedModel
+import model.WorkoutIdModel
+import model.WorkoutModel
 import ModelForRequest.BasePaginatedRequest
 import ModelForRequest.CreateWorkout
+import ModelForRequest.Debug
 import ModelForRequest.ExerciseTransfer
 import ModelForRequest.UpdateWorkout
 import ModelForRequest.cruds.CreateWorkoutRequest
@@ -15,33 +16,42 @@ import ModelForRequest.cruds.ReadWorkoutRequest
 import ModelForRequest.cruds.SearchWorkoutRequest
 import ModelForRequest.cruds.UpdateWorkoutRequest
 import context.MpContext
-
+import model.MpStubCases
 
 fun MpContext.setQuery(query: CreateWorkoutRequest) = apply {
-	this.idRequest = query.requestId ?: ""
-	this.requestWorkout = query.createWorkout?.toModel() ?: WorkoutModel()
+	operation = MpContext.MpOperations.CREATE
+	idRequest = query.requestId ?: ""
+	requestWorkout = query.createWorkout?.toModel() ?: WorkoutModel()
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: ReadWorkoutRequest) = apply {
-	this.idRequest = query.requestId ?: ""
-	this.requestWorkoutId = WorkoutIdModel(query.workoutId ?: "")
+	operation = MpContext.MpOperations.READ
+	idRequest = query.requestId ?: ""
+	requestWorkoutId = WorkoutIdModel(query.workoutId ?: "")
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: UpdateWorkoutRequest) = apply {
-	this.idRequest = query.requestId ?: ""
-	this.requestWorkout = query.updateWorkout?.toModel() ?: WorkoutModel()
+	operation = MpContext.MpOperations.UPDATE
+	idRequest = query.requestId ?: ""
+	requestWorkout = query.updateWorkout?.toModel() ?: WorkoutModel()
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: DeleteWorkoutRequest) = apply {
+	this.operation = MpContext.MpOperations.DELETE
 	idRequest = query.requestId ?: ""
 	requestWorkoutId = WorkoutIdModel(query.deleteAdId ?: "")
-
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun MpContext.setQuery(query: SearchWorkoutRequest) = apply {
+	this.operation = MpContext.MpOperations.SEARCH
 	idRequest = query.requestId ?: ""
 	requestWorkoutId = WorkoutIdModel(query.searchWorkoutId ?: "")
 	requestPage = query.page?.toModel() ?: PaginatedModel()
+	mpStubCases = query.debug?.stubCase.toModel()
 }
 
 fun BasePaginatedRequest.toModel() = PaginatedModel(
@@ -71,3 +81,9 @@ fun UpdateWorkout.toModel() = WorkoutModel(
 	description = description ?: "",
 	items = this.items?.map { it.toModel() }?.toMutableList() ?: mutableListOf()
 )
+
+private fun Debug.StubCase?.toModel() = when(this) {
+	Debug.StubCase.SUCCESS -> MpStubCases.SUCCESS
+	Debug.StubCase.DATABASE_ERROR -> MpStubCases.DATABASE_ERROR
+	null -> MpStubCases.NONE
+}

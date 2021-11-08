@@ -20,7 +20,9 @@ import kotlinx.serialization.*
  */
 @Serializable
 data class Debug (
-    @SerialName(value = "mode") val mode: Debug.Mode? = null
+    @SerialName(value = "mode") val mode: Debug.Mode? = null,
+    @SerialName(value = "stub")val stubCase: StubCase? = null
+
 ) {
 
     /**
@@ -32,6 +34,12 @@ data class Debug (
         @SerialName(value = "prod") PROD("prod"),
         @SerialName(value = "test") TEST("test"),
         @SerialName(value = "stub") STUB("stub");
+    }
+
+    @Serializable
+    enum class StubCase {
+        @SerialName(value = "success")SUCCESS,
+        @SerialName(value = "database_error")DATABASE_ERROR;
     }
 }
 

@@ -6,7 +6,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import ru.ru.otus.kotlin.kmp.transport.models.WorkoutAddRequest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -15,7 +14,7 @@ class SimpleSerializationTest {
 
 	@Test
 	fun requestSerialTest(){
-		val request = WorkoutAddRequest(
+		val request = CreateWorkoutRequest(
 			requestId = "12345"
 		)
 		val json = Json {

@@ -1,37 +1,36 @@
 package com.example.plugins
 
-import ModelForRequest.cruds.CreateWorkoutRequest
+import WorkoutCrud
 import com.example.controllers.WorkoutController
-import com.example.service.WorkoutService
-import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.response.*
-import io.ktor.request.*
+import io.ktor.routing.*
+import service.WorkoutService
 
 fun Application.configureRouting() {
 	// Starting point for a Ktor app:
 
-	val workoutService = WorkoutService()
+	val crud = WorkoutCrud()
+	val workoutService = WorkoutService(crud)
 	val workoutController = WorkoutController(workoutService)
 
 	routing {
-		route("workout"){
-			post("create"){
+		route("workout") {
+			post("create") {
 				workoutController.create(call)
 			}
-			post("read"){
+			post("read") {
 				workoutController.read(call)
 			}
-			post("update"){
+			post("update") {
 				workoutController.update(call)
 			}
-			post("delete"){
+			post("delete") {
 				workoutController.delete(call)
 			}
-			post("search"){
+			post("search") {
 				workoutController.search(call)
 			}
-
 
 		}
 		get("/") {

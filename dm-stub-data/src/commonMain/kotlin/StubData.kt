@@ -1,7 +1,7 @@
-import InnerModel.ExerciseModel
-import InnerModel.OwnerIdModel
-import InnerModel.WorkoutIdModel
-import InnerModel.WorkoutModel
+import model.ExerciseModel
+import model.OwnerIdModel
+import model.WorkoutIdModel
+import model.WorkoutModel
 
 object StubData {
 
