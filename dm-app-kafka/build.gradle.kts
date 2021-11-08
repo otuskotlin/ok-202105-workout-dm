@@ -1,6 +1,7 @@
 plugins {
     application
     kotlin("jvm")
+    kotlin("plugin.serialization") version "1.5.20"
 }
 
 application{
@@ -16,11 +17,11 @@ dependencies {
     implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 
     implementation(project(":dm-service"))
     implementation(project(":dm-transport-inner-model-mp"))
+    implementation(project(":dm-transport-main-mp"))
     implementation(project(":dm-cor-logic"))
     implementation(project(":dm-transport-main-mp"))
 

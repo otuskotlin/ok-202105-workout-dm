@@ -1,8 +1,10 @@
-
+import kafka.AppKafkaConfig
+import kafka.AppKafkaConsumer
 
 fun main(){
-	print("OK")
 
-
+	val config = AppKafkaConfig()
+	val consumer = AppKafkaConsumer(config)
+	consumer.run()
 
 }

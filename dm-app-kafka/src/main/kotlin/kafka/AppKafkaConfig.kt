@@ -37,8 +37,8 @@ data class AppKafkaConfig(
             val props = Properties().apply {
                 put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, hosts)
                 put(ConsumerConfig.GROUP_ID_CONFIG, groupId)
-                put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java)
-                put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java)
+                put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserialize")
+                put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
             }
             return KafkaConsumer<String, String>(props)
         }
