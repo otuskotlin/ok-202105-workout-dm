@@ -1,17 +1,13 @@
 package kafka
 
-import ModelForRequest.cruds.*
+import ModelForRequest.cruds.BaseMessage
 import ModelForRequest.jsonRequest
 import context.MpContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.producer.ProducerRecord
@@ -36,8 +32,7 @@ class AppKafkaConsumer(private val config: AppKafkaConfig) {
 				try {
 					val records: ConsumerRecords<String, String> = consumer.poll(Duration.ofSeconds(1))
 					records.forEach { record: ConsumerRecord<String, String> ->
-						val request =
-							withContext(Dispatchers.IO) { jsonRequest.decodeFromString<BaseMessage>(record.value()) }
+						val request = jsonRequest.decodeFromString<BaseMessage>(record.value())
 						sendResponse(service.handleWorkout(ctx, request))
 					}
 				} catch (e: Throwable) {
@@ -59,7 +54,7 @@ class AppKafkaConsumer(private val config: AppKafkaConfig) {
 	}
 
 	private suspend fun sendResponse(response: BaseMessage) {
-		val json = withContext(Dispatchers.IO) { jsonRequest.encodeToString(response) }
+		val json = jsonRequest.encodeToString(response)
 		val resRecord = ProducerRecord(
 			config.kafkaTopicOut,
 			UUID.randomUUID().toString(),
