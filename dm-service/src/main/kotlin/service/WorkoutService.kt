@@ -1,5 +1,6 @@
 package service
 
+import DataNotAllowedException
 import Mapper.setQuery
 import Mapper.toCreateResponse
 import Mapper.toDeleteResponse
@@ -44,6 +45,24 @@ class WorkoutService(
 		context.responseWorkouts = StubData.getModels().toMutableList()
 		crud.search(context.setQuery(request))
 		return context.toSearchResponse()
+	}
+
+	suspend fun errorAd(context: MpContext, e: Throwable): BaseMessage {
+		context.addError(e)
+		return context.toReadResponse()
+	}
+
+	suspend fun handleWorkout(context: MpContext, request: BaseMessage): BaseMessage = try {
+		when (request) {
+			is CreateWorkoutRequest -> createWorkout(context, request)
+			is ReadWorkoutRequest -> readWorkout(context, request)
+			is UpdateWorkoutRequest -> updateWorkout(context, request)
+			is DeleteWorkoutRequest -> deleteWorkout(context, request)
+			is SearchWorkoutRequest -> searchWorkout(context, request)
+			else -> throw DataNotAllowedException("Request is not Allowed", request)
+		}
+	} catch (e: Throwable) {
+		errorAd(context, e)
 	}
 
 }
