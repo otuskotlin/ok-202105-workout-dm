@@ -1,13 +1,13 @@
 package repo
 
-interface IRepoAd {
+interface IRepoWorkout {
 	suspend fun create(req: DbWorkoutModelRequest): DbWorkoutResponse
 	suspend fun read(req: DbWorkoutIdRequest): DbWorkoutResponse
 	suspend fun update(req: DbWorkoutModelRequest): DbWorkoutResponse
 	suspend fun delete(req: DbWorkoutIdRequest): DbWorkoutResponse
 	suspend fun search(req: DbWorkoutFilterRequest): DbWorkoutResponse
 
-	object NONE : IRepoAd {
+	object NONE : IRepoWorkout {
 		override suspend fun create(req: DbWorkoutModelRequest): DbWorkoutResponse {
 			TODO("Not yet implemented")
 		}
