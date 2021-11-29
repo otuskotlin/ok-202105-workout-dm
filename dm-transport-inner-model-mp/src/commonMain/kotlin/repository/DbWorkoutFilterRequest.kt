@@ -1,4 +1,4 @@
-package repo
+package repository
 
 data class DbWorkoutFilterRequest(
 	val searchStr: String = "",

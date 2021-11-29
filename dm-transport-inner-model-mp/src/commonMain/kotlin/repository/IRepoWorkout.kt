@@ -1,4 +1,4 @@
-package repo
+package repository
 
 interface IRepoWorkout {
 	suspend fun create(req: DbWorkoutModelRequest): DbWorkoutResponse

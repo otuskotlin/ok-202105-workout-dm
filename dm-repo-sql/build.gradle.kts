@@ -16,7 +16,7 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
-    implementation(project(":dm-transport-main-mp"))
+    implementation(project(":dm-transport-inner-model-mp"))
 
     implementation("org.postgresql:postgresql:$postgresDriverVersion")
 
