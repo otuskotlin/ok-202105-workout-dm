@@ -36,31 +36,31 @@ class RepoWorkoutSql(
 
 	private suspend fun save(item: WorkoutModel): DbWorkoutResponse {
 		return safeTransaction({
-			val realOwnerId = UsersTable.insertIgnore {
-				if (item.ownerId != OwnerIdModel.NONE) {
-					it[id] = item.ownerId.asUUID()
-				}
-				it[name] = item.ownerId.asUUID().toString()
-			} get UsersTable.id
-
-			val res = WorkoutTable.insert {
-				if (item.id != WorkoutIdModel.NONE) {
-					it[id] = item.id.asUUID()
-				}
-				it[title] = item.title
-				it[description] = item.description
-				it[ownerId] = realOwnerId
-				it[visibility] = item.visibility
-				it[dealSide] = item.dealSide
-			}
-
-			DbAdResponse(AdsTable.from(res), true)
-		}, {
-			DbAdResponse(
-				result = null,
-				isSuccess = false,
-				errors = listOf(CommonErrorModel(message = localizedMessage))
-			)
+//			val realOwnerId = UsersTable.insertIgnore {
+//				if (item.ownerId != OwnerIdModel.NONE) {
+//					it[id] = item.ownerId.asUUID()
+//				}
+//				it[name] = item.ownerId.asUUID().toString()
+//			} get UsersTable.id
+//
+//			val res = WorkoutTable.insert {
+//				if (item.id != WorkoutIdModel.NONE) {
+//					it[id] = item.id.asUUID()
+//				}
+//				it[title] = item.title
+//				it[description] = item.description
+//				it[ownerId] = realOwnerId
+//				it[visibility] = item.visibility
+//				it[dealSide] = item.dealSide
+//			}
+//
+//			DbAdResponse(AdsTable.from(res), true)
+//		}, {
+//			DbAdResponse(
+//				result = null,
+//				isSuccess = false,
+//				errors = listOf(CommonErrorModel(message = localizedMessage))
+//			)
 		})
 	}
 
