@@ -1,5 +1,6 @@
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.DatabaseConfig
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.transactions.DEFAULT_ISOLATION_LEVEL
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -45,6 +46,41 @@ class SqlConnector(
 			}
 		}
 
-//		return Database.connect();
+		// Create connection for all supported db types
+		val connect = Database.connect(
+			url, dbType.driver, user, password,
+			databaseConfig = databaseConfig,
+			setupConnection = { connection ->
+				when (dbType) {
+					DbType.MYSQL -> {
+						connection.transactionIsolation = DEFAULT_ISOLATION_LEVEL
+						connection.schema = schema
+						connection.catalog = schema
+					}
+					DbType.POSTGRESQL -> {
+						connection.transactionIsolation = DEFAULT_ISOLATION_LEVEL
+						connection.schema = schema
+					}
+				}
+			}
+		)
+
+		// Update schema:
+		//   - drop if needed (for ex, in tests);
+		//   - exec migrations if needed;
+		//   - otherwise unsure to create tables
+//		transaction(connect) {
+//			if (System.getenv("ok.mp.sql_drop_db")?.toBoolean() == true) {
+//				SchemaUtils.drop(*tables, inBatch = true)
+//				SchemaUtils.create(*tables, inBatch = true)
+//			} else if (System.getenv("ok.mp.sql_fast_migration").toBoolean()) {
+//				// TODO: Place to exec migration: create and ensure tables
+//			} else {
+//				SchemaUtils.createMissingTablesAndColumns(*tables, inBatch = true)
+//			}
+//		}
+
+
+		return connect;
 	}
 }
