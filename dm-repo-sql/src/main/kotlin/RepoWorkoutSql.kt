@@ -1,17 +1,17 @@
-import WorkoutTable.name
 import kotlinx.coroutines.runBlocking
-import model.CommonErrorModel
 import model.OwnerIdModel
-import model.WorkoutIdModel
 import model.WorkoutModel
 import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.insertIgnore
 import org.jetbrains.exposed.sql.transactions.transaction
 import repository.DbWorkoutFilterRequest
 import repository.DbWorkoutIdRequest
 import repository.DbWorkoutModelRequest
 import repository.DbWorkoutResponse
 import repository.IRepoWorkout
+import table.ExercisesTable
+import table.UsersTable
+import table.WorkoutTable
 import java.sql.SQLException
 
 class RepoWorkoutSql(
@@ -36,14 +36,14 @@ class RepoWorkoutSql(
 
 	private suspend fun save(item: WorkoutModel): DbWorkoutResponse {
 		return safeTransaction({
-//			val realOwnerId = UsersTable.insertIgnore {
-//				if (item.ownerId != OwnerIdModel.NONE) {
-//					it[id] = item.ownerId.asUUID()
-//				}
+			val realOwnerId = UsersTable.insertIgnore {
+				if (item.ownerId != OwnerIdModel.NONE) {
+					it[id] = item.ownerId.asUUID()
+				}
 //				it[name] = item.ownerId.asUUID().toString()
-//			} get UsersTable.id
+			} get UsersTable.id
 //
-//			val res = WorkoutTable.insert {
+//			val res = table.WorkoutTable.insert {
 //				if (item.id != WorkoutIdModel.NONE) {
 //					it[id] = item.id.asUUID()
 //				}

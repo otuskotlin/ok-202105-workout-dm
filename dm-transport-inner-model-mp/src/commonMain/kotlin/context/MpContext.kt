@@ -1,18 +1,13 @@
 package context
 
-import model.CommonErrorModel
-import model.IError
-import model.IUserSession
-import model.MpStubCases
-import model.PaginatedModel
-import model.WorkoutIdModel
-import model.WorkoutModel
+import model.*
 
 
 data class MpContext(
 	val userSession: IUserSession<*> = IUserSession.Companion.EmptySession,
 
 	var idRequest: String = "",
+	var ownerIdModel: OwnerIdModel,
 	var requestWorkoutId: WorkoutIdModel = WorkoutIdModel.NONE,
 	var requestWorkout: WorkoutModel = WorkoutModel(),
 	var responseWorkout: WorkoutModel = WorkoutModel(),
