@@ -2,6 +2,7 @@ import kotlinx.coroutines.runBlocking
 import model.OwnerIdModel
 import model.WorkoutModel
 import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertIgnore
 import org.jetbrains.exposed.sql.transactions.transaction
 import repository.DbWorkoutFilterRequest
@@ -54,8 +55,8 @@ class RepoWorkoutSql(
 //				it[dealSide] = item.dealSide
 //			}
 //
-//			DbAdResponse(AdsTable.from(res), true)
-//		}, {
+			DbWorkoutResponse(WorkoutTable.from(res), true)
+		}, {
 //			DbAdResponse(
 //				result = null,
 //				isSuccess = false,
