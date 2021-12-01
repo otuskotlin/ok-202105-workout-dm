@@ -1,9 +1,9 @@
 import kotlinx.coroutines.runBlocking
 import model.OwnerIdModel
+import model.WorkoutIdModel
 import model.WorkoutModel
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertIgnore
 import org.jetbrains.exposed.sql.transactions.transaction
 import repository.DbWorkoutFilterRequest
 import repository.DbWorkoutIdRequest
@@ -14,6 +14,7 @@ import table.ExercisesTable
 import table.UsersTable
 import table.WorkoutTable
 import java.sql.SQLException
+import java.util.*
 
 class RepoWorkoutSql(
 	url: String = "jdbc:postgresql://localhost:5432/sport_project",
@@ -37,31 +38,42 @@ class RepoWorkoutSql(
 
 	private suspend fun save(item: WorkoutModel): DbWorkoutResponse {
 		return safeTransaction({
-			val realOwnerId = UsersTable.insertIgnore {
+			val realOwnerId = UsersTable.insert {
 				if (item.ownerId != OwnerIdModel.NONE) {
 					it[id] = item.ownerId.asUUID()
 				}
 //				it[name] = item.ownerId.asUUID().toString()
 			} get UsersTable.id
-//
-//			val res = table.WorkoutTable.insert {
-//				if (item.id != WorkoutIdModel.NONE) {
-//					it[id] = item.id.asUUID()
-//				}
-//				it[title] = item.title
-//				it[description] = item.description
-//				it[ownerId] = realOwnerId
-//				it[visibility] = item.visibility
-//				it[dealSide] = item.dealSide
-//			}
-//
+
+			val exersieceId = mutableListOf<UUID>()
+			item.items.forEach { ex ->
+				exersieceId.add(ExercisesTable.insert {
+					it[nameExercise] = ex.nameExercise
+					it[numberRepetitions] = ex.numberRepetitions
+					it[weight] = ex.weight
+					it[retry] = ex.retry
+					it[ownWeight] = ex.ownWeight
+				} get UsersTable.id)
+			}
+
+			val res = table.WorkoutTable.insert {
+				if (item.id != WorkoutIdModel.NONE) {
+					it[id] = item.id.asUUID()
+				}
+				it[description] = item.description
+				it[ownerId] = realOwnerId
+				it[name] = item.name
+				it[exercises] = exersieceId
+
+			}
+
 			DbWorkoutResponse(WorkoutTable.from(res), true)
 		}, {
-//			DbAdResponse(
-//				result = null,
-//				isSuccess = false,
-//				errors = listOf(CommonErrorModel(message = localizedMessage))
-//			)
+			DbWorkoutResponse(
+				result = null,
+				isSuccess = false,
+//				errors = listOf(ModelForRequest.ApiError())
+			)
 		})
 	}
 

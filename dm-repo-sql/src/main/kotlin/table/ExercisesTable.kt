@@ -19,4 +19,5 @@ object ExercisesTable : Table("Exercises") {
     /* вес в упражнении */
     var weight = integer("weight")
 
+    override val primaryKey = PrimaryKey(id)
 }
