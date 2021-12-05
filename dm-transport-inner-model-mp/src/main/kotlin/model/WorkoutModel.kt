@@ -5,5 +5,5 @@ data class WorkoutModel(
 	var ownerId : OwnerIdModel = OwnerIdModel.NONE,
 	var name: String = "",
 	var description: String = "",
-	var items: MutableList<ExerciseModel> = mutableListOf()
+	var excersices : MutableList<ExerciseModel> = mutableListOf()
 )

@@ -63,7 +63,7 @@ fun CreateWorkout.toModel() = WorkoutModel(
 	description = this.description ?: "",
 	ownerId = OwnerIdModel(this.ownerId ?: ""),
 	name = this.name ?: "",
-	items = this.items?.map { it.toModel() }?.toMutableList() ?: mutableListOf()
+	excersices = this.items?.map { it.toModel() }?.toMutableList() ?: mutableListOf()
 )
 
 fun ExerciseTransfer.toModel() = ExerciseModel(
@@ -79,7 +79,7 @@ fun UpdateWorkout.toModel() = WorkoutModel(
 	ownerId = OwnerIdModel(ownerId ?: ""),
 	name = name ?: "",
 	description = description ?: "",
-	items = this.items?.map { it.toModel() }?.toMutableList() ?: mutableListOf()
+	excersices = this.items?.map { it.toModel() }?.toMutableList() ?: mutableListOf()
 )
 
 private fun Debug.StubCase?.toModel() = when(this) {

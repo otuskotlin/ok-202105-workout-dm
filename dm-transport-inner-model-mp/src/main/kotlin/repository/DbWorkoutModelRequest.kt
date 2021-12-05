@@ -1,7 +1,8 @@
 package repository
 
 import ModelForRequest.BaseWorkout
+import model.WorkoutModel
 
 data class DbWorkoutModelRequest(
-	var createWorkout: BaseWorkout
+	var workoutModel: WorkoutModel
 )

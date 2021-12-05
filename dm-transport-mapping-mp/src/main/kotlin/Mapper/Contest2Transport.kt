@@ -8,7 +8,7 @@ import context.MpContext
 import model.*
 
 fun MpContext.toCreateResponse() = CreateWorkoutResponse(
-    requestId = this.idRequest.takeIf { it.isNotBlank() },
+    requestId = idRequest.takeIf { it.isNotBlank() },
     createdWorkout = responseWorkout.takeIf { it != WorkoutModel() }?.toTransport(),
     errors = errors.takeIf { it.isNotEmpty() }?.map { it.toTransport() },
     result = if (errors.find { it.level == IError.Level.ERROR } == null) BaseResponse.Result.SUCCESS
@@ -41,7 +41,8 @@ fun MpContext.toDeleteResponse() = DeleteWorkoutResponse(
 
 fun MpContext.toSearchResponse() = SearchWorkoutResponse(
     requestId = this.idRequest.takeIf { it.isNotBlank() },
-    foundAds = responseWorkouts.takeIf { it.isNotEmpty() }?.filter { it != WorkoutModel() }?.map { it.toTransport() },
+    foundAds = responseWorkouts.takeIf { it.isNotEmpty() }?.filter { it != WorkoutModel() }
+        ?.map { it.toTransport() },
     errors = errors.takeIf { it.isNotEmpty() }?.map { it.toTransport() },
     result = if (errors.find { it.level == IError.Level.ERROR } == null) BaseResponse.Result.SUCCESS
     else BaseResponse.Result.ERROR
@@ -51,7 +52,7 @@ private fun WorkoutModel.toTransport() = ResponseWorkout(
     id = id.takeIf { it != WorkoutIdModel.NONE }?.asString(),
     name = name.takeIf { it.isNotEmpty() },
     description = description.takeIf { it.isNotEmpty() },
-    items = items.takeIf { it.isNotEmpty() }?.map { it.toTransport() }?.toMutableList(),
+    items = excersices.takeIf { it.isNotEmpty() }?.map { it.toTransport() }?.toMutableList(),
     ownerId = ownerId.takeIf { it != OwnerIdModel.NONE }?.toString()
 )
 

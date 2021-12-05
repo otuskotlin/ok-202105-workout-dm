@@ -24,10 +24,10 @@ object StubData {
 
 	private val stubWorkoutModel = WorkoutModel(
 		id = WorkoutIdModel(id = "99"),
-		ownerId = OwnerIdModel(value = "10"),
+		ownerId = OwnerIdModel( "10"),
 		name = "Простая тренировка",
 		description = "Это просто стабовые данные",
-		items = mutableListOf(stubExerciseModel1, stubExerciseModel2)
+		excersices = mutableListOf(stubExerciseModel1, stubExerciseModel2)
 	)
 
 	fun getModel(model: (WorkoutModel.() -> Unit)? = null) = stubWorkoutModel.also { stub ->

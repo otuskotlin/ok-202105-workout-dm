@@ -8,6 +8,5 @@ object UsersTable : Table("Users") {
     val surname = varchar("surname", 128)
     val description = varchar("description", 128)
 
-
     override val primaryKey = PrimaryKey(id)
 }
