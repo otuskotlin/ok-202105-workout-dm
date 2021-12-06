@@ -44,12 +44,7 @@ class RepoWorkoutSqlTest {
 
     @Test
     fun testSave() {
-//        repoWorkoutSql.
         println("Good")
-//        runBlocking {
-//            repoWorkoutSql.save(get())
-//        }
-//        println("end")
     }
 
 

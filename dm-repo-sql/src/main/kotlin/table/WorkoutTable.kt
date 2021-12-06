@@ -3,9 +3,9 @@ package table
 import model.OwnerIdModel
 import model.WorkoutIdModel
 import model.WorkoutModel
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.statements.InsertStatement
-import java.util.*
 
 object WorkoutTable : Table("Workouts") {
 	val id = uuid("id").autoGenerate().uniqueIndex()
@@ -16,7 +16,6 @@ object WorkoutTable : Table("Workouts") {
 
 	override val primaryKey = PrimaryKey(ExercisesTable.id)
 
-
 	fun from(res: InsertStatement<Number>) = WorkoutModel(
 		id = WorkoutIdModel(res[id]),
 		ownerId = OwnerIdModel(res[ownerId]),
@@ -24,6 +23,18 @@ object WorkoutTable : Table("Workouts") {
 		description = res[description],
 		excersices = mutableListOf()
 	)
+
+	fun from(res: ResultRow) = WorkoutModel(
+		id = WorkoutIdModel(res[id]),
+		ownerId = OwnerIdModel(res[ownerId]),
+		name = res[name],
+		description = res[description],
+		excersices = mutableListOf()
+	)
+
+	fun from(it: Iterable<ResultRow>): MutableList<WorkoutModel> {
+		return it.map { from(it) }.toMutableList()
+	}
 
 //		fun from(res: InsertStatement<Number>) = AdModel(
 //			id = AdIdModel(res[id]),

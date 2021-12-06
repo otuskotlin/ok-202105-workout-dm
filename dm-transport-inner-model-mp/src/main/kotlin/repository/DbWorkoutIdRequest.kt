@@ -1,7 +1,7 @@
 package repository
 
-import ModelForRequest.CreateWorkout
+import model.WorkoutIdModel
 
 data class DbWorkoutIdRequest(
-	val model: CreateWorkout
+	val id: WorkoutIdModel = WorkoutIdModel.NONE
 )

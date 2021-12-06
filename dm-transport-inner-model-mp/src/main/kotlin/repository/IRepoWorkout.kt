@@ -5,7 +5,7 @@ interface IRepoWorkout {
 	suspend fun read(req: DbWorkoutIdRequest): DbWorkoutResponse
 	suspend fun update(req: DbWorkoutModelRequest): DbWorkoutResponse
 	suspend fun delete(req: DbWorkoutIdRequest): DbWorkoutResponse
-	suspend fun search(req: DbWorkoutFilterRequest): DbWorkoutResponse
+	suspend fun search(req: DbWorkoutFilterRequest): DbWorkoutsResponse
 
 	object NONE : IRepoWorkout {
 		override suspend fun create(req: DbWorkoutModelRequest): DbWorkoutResponse {
@@ -24,7 +24,7 @@ interface IRepoWorkout {
 			TODO("Not yet implemented")
 		}
 
-		override suspend fun search(req: DbWorkoutFilterRequest): DbWorkoutResponse {
+		override suspend fun search(req: DbWorkoutFilterRequest): DbWorkoutsResponse {
 			TODO("Not yet implemented")
 		}
 
