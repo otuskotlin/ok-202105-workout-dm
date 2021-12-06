@@ -9,7 +9,9 @@ import validation
 import validators.workers.chainInit
 import validators.workers.checkIdRequest
 import validators.workers.checkOperation
+import validators.workers.choseBd
 import validators.workers.prepareAnswer
+import validators.workers.repoCreate
 import validators.workers.stub.workoutStub
 
 object WorkoutCreate : ICorExec<MpContext> by chain<MpContext>({
@@ -33,7 +35,11 @@ object WorkoutCreate : ICorExec<MpContext> by chain<MpContext>({
 
 	workoutStub("Обработка стабкейса")
 
+	choseBd("Установка репозитория")
+
+	repoCreate("Create")
 	//db worker
+
 	prepareAnswer("Подготовка ответа")
 
 }).build()

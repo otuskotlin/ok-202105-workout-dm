@@ -1,7 +1,14 @@
 package context
 
-import model.*
-
+import model.CommonErrorModel
+import model.IError
+import model.IUserSession
+import model.MpStubCases
+import model.OwnerIdModel
+import model.PaginatedModel
+import model.WorkoutIdModel
+import model.WorkoutModel
+import repository.IRepoWorkout
 
 data class MpContext(
 	val userSession: IUserSession<*> = IUserSession.Companion.EmptySession,
@@ -20,7 +27,9 @@ data class MpContext(
 	var operation: MpOperations = MpOperations.NONE,
 	var mpStubCases: MpStubCases = MpStubCases.NONE,
 
-	) {
+	var iRepoWorkout: IRepoWorkout = IRepoWorkout.NONE
+
+) {
 	enum class MpOperations {
 		NONE,
 		INIT,
@@ -42,7 +51,6 @@ data class MpContext(
 		if (failingStatus) status = CorStatus.FAILING
 		errors.add(error)
 	}
-
 
 	suspend fun addError(
 		e: Throwable,

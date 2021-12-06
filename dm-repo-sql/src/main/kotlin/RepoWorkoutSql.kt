@@ -35,7 +35,7 @@ class RepoWorkoutSql(
 	password: String = "postgres",
 	schema: String = "sport_project",
 
-	private val initObjects: List<WorkoutModel>
+	private val initObjects: List<WorkoutModel> = mutableListOf()
 
 ) : IRepoWorkout {
 
