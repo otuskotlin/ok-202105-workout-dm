@@ -1,11 +1,9 @@
 import handlers.chain
 import handlers.parallel
 import handlers.worker
-import kotlin.test.Test
 
 class CorBaseTest {
 
-	@Test
 	fun createCor() {
 
 	}
