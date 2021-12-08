@@ -14,7 +14,7 @@ import validators.workers.stub.workoutStub
 
 object WorkoutDelete : ICorExec<MpContext> by chain<MpContext>({
 
-    checkOperation("Проверка соответствия операции", MpContext.MpOperations.CREATE)
+    checkOperation("Проверка соответствия операции", MpContext.MpOperations.DELETE)
 
     chainInit(" Инициализация чейна")
 
@@ -32,8 +32,10 @@ object WorkoutDelete : ICorExec<MpContext> by chain<MpContext>({
     }
 
     workoutStub("Обработка стабкейса")
+
     choseBd("Установка репозитория")
 
+    repoDelete("Удалить тренировку")
     //db worker
     prepareAnswer("Подготовка ответа")
 

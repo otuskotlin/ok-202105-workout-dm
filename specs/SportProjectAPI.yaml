@@ -48,6 +48,69 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReadWorkoutResponse'
+  /workout/update:
+      post:
+        tags:
+          - workout
+        summary: Получить информацию о тренеровке
+        operationId: readWorkout
+        requestBody:
+          description: Объект запроса для получения информации об тренеровке
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateWorkoutRequest'
+          required: true
+        responses:
+          200:
+            description: all responses
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UpdateWorkoutResponse'
+
+  /workout/dele:
+    post:
+      tags:
+        - workout
+      summary: Удалить тренеровку
+      operationId: readWorkout
+      requestBody:
+        description: Объект запроса для получения информации об тренеровке
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteWorkoutRequest'
+        required: true
+      responses:
+        200:
+          description: all responses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteWorkoutResponse'
+
+  /workout/search:
+      post:
+        tags:
+          - workout
+        summary: Поиск всех тренеровок для пользователя
+        operationId: readWorkout
+        requestBody:
+          description: Объект запроса для получения информации об тренеровке
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchWorkoutRequest'
+          required: true
+        responses:
+          200:
+            description: all responses
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SearchWorkoutResponse'
+
 
 components:
   schemas:

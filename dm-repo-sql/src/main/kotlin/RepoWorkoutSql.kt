@@ -156,8 +156,8 @@ class RepoWorkoutSql(
     override suspend fun delete(req: DbWorkoutIdRequest): DbWorkoutResponse {
         return safeTransaction({
             val result = WorkoutTable.select { WorkoutTable.id.eq(req.id.asUUID()) }.single()
-            WorkoutTable.deleteWhere { WorkoutTable.id eq req.id.asUUID() }
-            ExercisesTable.deleteWhere { workout_id eq req.id.asUUID() }
+            WorkoutTable.deleteWhere { WorkoutTable.id eq req.id.asUUID()  }
+//            ExercisesTable.deleteWhere { workout_id eq req.id.asUUID() }
 
             DbWorkoutResponse(result = WorkoutTable.from(result), isSuccess = true)
         }, {
