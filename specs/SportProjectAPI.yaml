@@ -31,7 +31,7 @@ paths:
   /workout/read:
     post:
       tags:
-        - ad
+        - workout
       summary: Получить информацию о тренеровке
       operationId: readWorkout
       requestBody:

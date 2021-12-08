@@ -6,8 +6,8 @@ import context.CorStatus
 import context.MpContext
 import model.CommonErrorModel
 import validation
+import validators.workers.*
 import validators.workers.chainInit
-import validators.workers.checkIdRequest
 import validators.workers.checkOperation
 import validators.workers.prepareAnswer
 import validators.workers.stub.workoutStub
@@ -31,6 +31,8 @@ object WorkoutRead: ICorExec<MpContext> by chain<MpContext> ({
 		checkIdRequest()
 	}
 	workoutStub("Обработка стабкейса")
+	choseBd("Установка репозитория")
+	repoRead("Чтение из БД")
 
 	//db worker
 	prepareAnswer("Подготовка ответа")
