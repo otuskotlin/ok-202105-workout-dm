@@ -17,5 +17,5 @@ data class UpdateWorkout (
     /* Описание упражнения */
     @SerialName(value = "description") val description: kotlin.String? = null,
     @SerialName(value = "items") val items: kotlin.collections.List<ExerciseTransfer>? = null,
-    override val ownerId: String?
+    @SerialName(value = "ownerId") override val ownerId: String?
 ) : BaseWorkout

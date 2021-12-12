@@ -23,27 +23,26 @@ class WorkoutService(
 	}
 
 	suspend fun readWorkout(context: MpContext, request: ReadWorkoutRequest): ReadWorkoutResponse {
-		context.responseWorkout = StubData.getModel()
-		crud.read(context.setQuery(request))
+		context.setQuery(request)
+		crud.read(context)
 		return context.toReadResponse()
 	}
 
 	suspend fun updateWorkout(context: MpContext, request: UpdateWorkoutRequest): UpdateWorkoutResponse {
-		context.responseWorkout = StubData.getModel()
-
-		crud.update(context.setQuery(request))
+		context.setQuery(request)
+		crud.update(context)
 		return context.toUpdateResponse()
 	}
 
 	suspend fun deleteWorkout(context: MpContext, request: DeleteWorkoutRequest): DeleteWorkoutResponse {
-		context.responseWorkout = StubData.getModel()
-		crud.delete(context.setQuery(request))
+		context.setQuery(request)
+		crud.delete(context)
 		return context.toDeleteResponse()
 	}
 
 	suspend fun searchWorkout(context: MpContext, request: SearchWorkoutRequest): SearchWorkoutResponse {
-		context.responseWorkouts = StubData.getModels().toMutableList()
-		crud.search(context.setQuery(request))
+		context.setQuery(request)
+		crud.search(context)
 		return context.toSearchResponse()
 	}
 

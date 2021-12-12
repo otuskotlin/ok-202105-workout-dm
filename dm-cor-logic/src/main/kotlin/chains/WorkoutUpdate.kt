@@ -13,7 +13,7 @@ object WorkoutUpdate : ICorExec<MpContext> by chain<MpContext>({
 
     checkOperation("Проверка соответствия операции", MpContext.MpOperations.UPDATE)
 
-    chainInit(" Инициализация чейна")
+    chainInit("Инициализация чейна")
 
     validation {
         errorHandler { validationResult ->

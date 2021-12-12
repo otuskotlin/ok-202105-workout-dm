@@ -111,15 +111,16 @@ class RepoWorkoutSql(
 
     override suspend fun update(model: DbWorkoutModelRequest): DbWorkoutResponse {
         val workoutModel = model.workoutModel
+
         return safeTransaction({
             println("Start save")
-            val realOwnerId = UsersTable.update {
-                if (workoutModel.ownerId != OwnerIdModel.NONE) {
-                    it[id] = workoutModel.ownerId.asUUID()
-                }
-            }
+//            val realOwnerId = UsersTable.update {
+//                if (workoutModel.ownerId != OwnerIdModel.NONE) {
+//                    it[id] = workoutModel.ownerId.asUUID()
+//                }
+//            }
 
-            WorkoutTable.update({ UsersTable.id.eq(workoutModel.id.asUUID()) }) {
+            WorkoutTable.update({ WorkoutTable.id.eq(workoutModel.id.asUUID()) }) {
                 if (workoutModel.id != WorkoutIdModel.NONE) {
                     it[id] = workoutModel.id.asUUID()
                 }
@@ -145,10 +146,11 @@ class RepoWorkoutSql(
 
             DbWorkoutResponse(WorkoutTable.from(result), true)
         }, {
+            println(this.stackTrace)
             DbWorkoutResponse(
                 result = null,
                 isSuccess = false,
-//				errors = listOf(ModelForRequest.ApiError())
+                errors = listOf()
             )
         })
     }
@@ -156,7 +158,7 @@ class RepoWorkoutSql(
     override suspend fun delete(req: DbWorkoutIdRequest): DbWorkoutResponse {
         return safeTransaction({
             val result = WorkoutTable.select { WorkoutTable.id.eq(req.id.asUUID()) }.single()
-            WorkoutTable.deleteWhere { WorkoutTable.id eq req.id.asUUID()  }
+            WorkoutTable.deleteWhere { WorkoutTable.id eq req.id.asUUID() }
 //            ExercisesTable.deleteWhere { workout_id eq req.id.asUUID() }
 
             DbWorkoutResponse(result = WorkoutTable.from(result), isSuccess = true)
@@ -200,6 +202,7 @@ class RepoWorkoutSql(
         return try {
             transaction(db, statement)
         } catch (e: SQLException) {
+            println(e.message)
             throw e
         } catch (e: Throwable) {
             return handleException(e)
