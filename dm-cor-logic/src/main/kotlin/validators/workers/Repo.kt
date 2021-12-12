@@ -97,7 +97,7 @@ internal fun ICorChainDsl<MpContext>.repoSearch(title: String) = worker {
 	handle {
 		val result = iRepoWorkout.search(DbWorkoutFilterRequest("NotUseThisString", ownerIdModel))
 		val resultValue = result.result
-		if (result.isSuccess && resultValue != null) {
+		if (result.isSuccess) {
 			responseWorkouts = resultValue
 		} else {
 			addError(

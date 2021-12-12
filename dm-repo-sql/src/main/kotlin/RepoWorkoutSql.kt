@@ -174,12 +174,12 @@ class RepoWorkoutSql(
     override suspend fun search(req: DbWorkoutFilterRequest): DbWorkoutsResponse {
         return safeTransaction({
             val workoutModelList: MutableList<WorkoutModel> = (WorkoutTable innerJoin UsersTable)
-                .select { WorkoutTable.id.eq(req.ownerId.asUUID()) }
+                .select { WorkoutTable.ownerId.eq(req.ownerId.asUUID()) }
                 .map { WorkoutTable.from(it) }
                 .toMutableList()
 
-            workoutModelList.forEach {
-                it.excersices = ExercisesTable.select() { workout_id.eq(it.id.asUUID()) }
+            workoutModelList.forEach { it ->
+                it.excersices = ExercisesTable.select { workout_id.eq(it.id.asUUID()) }
                     .map { ExercisesTable.from(it) }
                     .toMutableList()
             }

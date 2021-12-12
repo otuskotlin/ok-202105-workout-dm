@@ -49,7 +49,8 @@ fun MpContext.setQuery(query: DeleteWorkoutRequest) = apply {
 fun MpContext.setQuery(query: SearchWorkoutRequest) = apply {
 	this.operation = MpContext.MpOperations.SEARCH
 	idRequest = query.requestId ?: ""
-	requestWorkoutId = WorkoutIdModel(query.searchWorkoutId ?: "")
+	ownerIdModel = OwnerIdModel(query.searchOwnerId ?: "")
+	requestWorkoutId = WorkoutIdModel(query.searchOwnerId ?: "")
 	requestPage = query.page?.toModel() ?: PaginatedModel()
 	mpStubCases = query.debug?.stubCase.toModel()
 }

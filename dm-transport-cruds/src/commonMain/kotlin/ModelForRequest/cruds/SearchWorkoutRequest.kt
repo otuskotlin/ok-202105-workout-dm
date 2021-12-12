@@ -29,7 +29,7 @@ data class SearchWorkoutRequest (
     @SerialName(value = "requestId") override val requestId: String? = null,
     @SerialName(value = "debug") override val debug: Debug? = null,
     @SerialName(value = "page") val page: BasePaginatedRequest? = null,
-    @SerialName(value = "searchWorkoutId") val searchWorkoutId: String? = null
+    @SerialName(value = "searchOwnerId") val searchOwnerId: String? = null
 
 ) : BaseMessage, BaseRequest
 
