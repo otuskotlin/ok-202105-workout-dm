@@ -13,7 +13,7 @@ pluginManagement{
 	}
 }
 
-include("dm-transport-main-mp")
+include("dm-transport-cruds")
 include("dm-transport-inner-model-mp")
 include("dm-transport-mapping-mp")
 include("dm-app-sport-project-ktor")
@@ -24,3 +24,4 @@ include("dm-cor-logic")
 include("dm-service")
 include("dm-CoR-validation")
 include("dm-app-kafka")
+include("dm-repo-sql")

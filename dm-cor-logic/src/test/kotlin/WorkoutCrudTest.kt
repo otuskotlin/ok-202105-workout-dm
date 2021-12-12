@@ -26,7 +26,7 @@ class WorkoutCrudTest {
 		with(context.responseWorkout) {
 			assertEquals(expected.id, id)
 			assertEquals(expected.description, description)
-			assertEquals(expected.items, items)
+			assertEquals(expected.excersices, excersices)
 			assertEquals(expected.name, name)
 			assertEquals(expected.ownerId, ownerId)
 		}
@@ -69,7 +69,7 @@ class WorkoutCrudTest {
 			assertEquals(expected.name, name)
 			assertEquals(expected.description, description)
 			assertEquals(expected.ownerId, ownerId)
-			assertEquals(expected.items, items)
+			assertEquals(expected.excersices, excersices)
 		}
 	}
 

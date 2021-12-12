@@ -1,5 +1,6 @@
 package validators.workers.stub
 
+import StubData.getModel
 import context.CorStatus
 import context.MpContext
 import handlers.CorChainDsl
@@ -17,7 +18,7 @@ internal fun CorChainDsl<MpContext>.workoutStub(title: String) {
 			this.title = "SUCCESS stubcase worker"
 			on { mpStubCases == MpStubCases.SUCCESS }
 			handle {
-				responseWorkout = StubData.getModel()
+				responseWorkout = getModel()
 				println("add in stubcase $responseWorkout. \n context $this")
 				status = CorStatus.FINISHING
 			}
